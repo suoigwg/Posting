@@ -21,7 +21,8 @@ import * as actionCreators from './store/actionCreaters'
 class Header extends Component{
 
     showHotTopic(){
-        if (this.props.focused) {
+        const {focused, list} = this.props
+        if (focused) {
             return (
                 <SearchInfo>
                     <SearchInfoTitle>热门搜索
@@ -29,7 +30,7 @@ class Header extends Component{
                     </SearchInfoTitle>
                     <div>
                         <SearchInfoList>
-                            {this.props.list.map((item)=>{
+                            {list.map((item) => {
                                 return <SearchInfoItem key={item}>{item}</SearchInfoItem>
                             })}
                         </SearchInfoList>
@@ -40,6 +41,7 @@ class Header extends Component{
     }
 
     render() {
+        const {focused, searchBarFocused, searchBarBlur} = this.props;
         return(
             <HeaderWrapper>
                 <Logo/>
@@ -50,18 +52,18 @@ class Header extends Component{
                     <NavItem className='right '><i className='iconfont'>&#xe636;</i></NavItem>
                     <SearchWrapper>
                         <CSSTransition
-                            in={this.props.focused}
+                            in={focused}
                             timeout={200}
                             classNames="slide"
                         >
                             <NavSearch
-                                className={this.props.focused?'focused':''}
-                                onFocus={this.props.searchBarFocused}
-                                onBlur={this.props.searchBarBlur}
+                                className={focused ? 'focused' : ''}
+                                onFocus={searchBarFocused}
+                                onBlur={searchBarBlur}
                             />
                         </CSSTransition>
-                        <i className={this.props.focused?'focused iconfont':'iconfont'}>&#xe6e4;</i>
-                        {this.showHotTopic(this.props.focused)}
+                        <i className={focused ? 'focused iconfont' : 'iconfont'}>&#xe6e4;</i>
+                        {this.showHotTopic(focused)}
                     </SearchWrapper>
                     <Addition>
                         <Button className='reg'><i className='iconfont'>&#xe615;</i>写文章</Button>

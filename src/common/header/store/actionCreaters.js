@@ -2,6 +2,14 @@ import * as constants from './constants'
 import axios from 'axios'
 import {fromJS} from "immutable";
 
+const getHotTopicsAction = (data) => {
+    return {
+        type: constants.GET_HOT_TOPICS,
+        data: fromJS(data)
+    }
+};
+
+
 export const searchBarFocusAction = ()=>{
     return {
         type: constants.SEARCH_BAR_FOCUSED
@@ -14,12 +22,6 @@ export const searchBarBlurAction = ()=>{
     }
 };
 
-export const getHotTopicsAction = (data)=>{
-    return {
-        type: constants.GET_HOT_TOPICS,
-        data: fromJS(data)
-    }
-};
 
 
 export const getHotTopics = ()=>{
