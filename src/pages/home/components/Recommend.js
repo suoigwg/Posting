@@ -9,7 +9,7 @@ class Recommend extends Component {
             <Fragment>
                 {list.map((item) => {
                     return (
-                        <RecommendWrapper>
+                        <RecommendWrapper key={item.get('id')}>
                             <RecommendItem imgUrl={item.get('imgUrl')}>
                             </RecommendItem>
                         </RecommendWrapper>
@@ -24,7 +24,7 @@ class Recommend extends Component {
 
 const mapStateToProps = (state /*, ownProps*/) => {
     return {
-        list: state.getIn(['home', 'linkList']),
+        list: state.getIn(['home', 'recommendList']),
     }
 };
 

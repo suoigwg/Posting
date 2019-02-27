@@ -9,11 +9,10 @@ class Topic extends Component {
 
     render() {
         const {topicList} = this.props;
-        console.log(topicList);
         return (
             <TopicWrapper>
                 {topicList.map((item) => {
-                    return <TopicItem key={item.get('id')}><img className='topic-pic'
+                    return <TopicItem key={item.get('id')}><img alt='' className='topic-pic'
                                                                 src={item.get('imgUrl')}/>{item.get('title')}
                     </TopicItem>
                 })}
