@@ -56,7 +56,7 @@ class Header extends Component{
     }
 
     render() {
-        const {focused, searchBarFocused, searchBarBlur} = this.props;
+        const {focused, list, searchBarFocused, searchBarBlur} = this.props;
         return(
             <HeaderWrapper>
                 <Logo/>
@@ -73,7 +73,9 @@ class Header extends Component{
                         >
                             <NavSearch
                                 className={focused ? 'focused' : ''}
-                                onFocus={searchBarFocused}
+                                onFocus={() => {
+                                    searchBarFocused(list)
+                                }}
                                 onBlur={searchBarBlur}
                             />
                         </CSSTransition>
@@ -105,8 +107,8 @@ const mapStateToProps = (state /*, ownProps*/) => {
 
 const mapDispatchToProps = (dispatch)=>{
     return{
-        searchBarFocused(){
-            dispatch(actionCreators.getHotTopics());
+        searchBarFocused(list) {
+            (list.size === 0) && dispatch(actionCreators.getHotTopics());
             dispatch(actionCreators.searchBarFocusAction());
         },
 
