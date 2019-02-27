@@ -17,22 +17,32 @@ import {
 } from "./style";
 import {CSSTransition} from 'react-transition-group'
 import * as actionCreators from './store/actionCreaters'
+import {constants} from "./store";
 
 class Header extends Component{
 
     showHotTopic(){
-        const {focused, list} = this.props
-        if (focused) {
+        const {focused, list, hotTopicMouseIn, hotTopicMouseOut, mouseIn, totalPage, currentPage, switchPage} = this.props
+        if (focused || mouseIn) {
+            const newList = list.toJS();
+            let searchInfoList = [];
+
+            for (let i = currentPage * constants.TOPICS_PER_PAGE; i < (currentPage + 1) * constants.TOPICS_PER_PAGE; i++) {
+                if (newList[i])
+                    searchInfoList.push(<SearchInfoItem key={newList[i]}>{newList[i]}</SearchInfoItem>)
+            }
+
             return (
-                <SearchInfo>
+                <SearchInfo
+                    onMouseEnter={hotTopicMouseIn}
+                    onMouseLeave={hotTopicMouseOut}
+                >
                     <SearchInfoTitle>热门搜索
-                        <SearchInfoSwitch>换一批</SearchInfoSwitch>
+                        <SearchInfoSwitch onClick={() => switchPage(currentPage, totalPage)}>换一批</SearchInfoSwitch>
                     </SearchInfoTitle>
                     <div>
                         <SearchInfoList>
-                            {list.map((item) => {
-                                return <SearchInfoItem key={item}>{item}</SearchInfoItem>
-                            })}
+                            {searchInfoList}
                         </SearchInfoList>
                     </div>
                 </SearchInfo>
@@ -80,7 +90,11 @@ class Header extends Component{
 const mapStateToProps = (state /*, ownProps*/) => {
     return {
         focused: state.getIn(['header', 'focused']),
-        list: state.getIn(['header','list'])
+        list: state.getIn(['header', 'list']),
+        mouseIn: state.getIn(['header', 'mouseIn']),
+        currentPage: state.getIn(['header', 'currentPage']),
+        totalPage: state.getIn(['header', 'totalPage']),
+
     }
 };
 
@@ -93,6 +107,21 @@ const mapDispatchToProps = (dispatch)=>{
 
         searchBarBlur(){
             dispatch(actionCreators.searchBarBlurAction());
+        },
+
+        hotTopicMouseIn() {
+            dispatch(actionCreators.hotTopicMouseInAction());
+        },
+
+        hotTopicMouseOut() {
+            dispatch(actionCreators.hotTopicMouseOutAction());
+        },
+        switchPage(currentPage, totalPage) {
+            if (currentPage === totalPage - 1) {
+                dispatch(actionCreators.switchPageAction(0));
+            } else {
+                dispatch(actionCreators.switchPageAction(currentPage + 1));
+            }
         }
 
     }

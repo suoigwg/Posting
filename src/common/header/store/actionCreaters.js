@@ -5,7 +5,8 @@ import {fromJS} from "immutable";
 const getHotTopicsAction = (data) => {
     return {
         type: constants.GET_HOT_TOPICS,
-        data: fromJS(data)
+        data: fromJS(data),
+        totalPage: Math.ceil(data.length / constants.TOPICS_PER_PAGE)
     }
 };
 
@@ -22,6 +23,24 @@ export const searchBarBlurAction = ()=>{
     }
 };
 
+export const hotTopicMouseInAction = () => {
+    return {
+        type: constants.HOT_TOPIC_MOUSE_IN
+    }
+};
+
+export const hotTopicMouseOutAction = () => {
+    return {
+        type: constants.HOT_TOPIC_MOUSE_OUT
+    }
+};
+
+export const switchPageAction = (nextPage) => {
+    return {
+        type: constants.SWITCH_PAGE,
+        nextPage
+    }
+};
 
 
 export const getHotTopics = ()=>{
