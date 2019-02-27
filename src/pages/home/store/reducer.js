@@ -4,7 +4,8 @@ import * as constants from './constants'
 const defaultState = fromJS({
     topicList: [],
     articleList: [],
-    recommendList: []
+    recommendList: [],
+    showTopButton: false
 });
 
 export default (state = defaultState, action) => {
@@ -15,6 +16,8 @@ export default (state = defaultState, action) => {
                 articleList: action.articleList,
                 recommendList: action.recommendList
             });
+        case constants.CHANGE_TOP_BUTTON_VISIBILITY:
+            return state.set('showTopButton', action.visibility);
         default:
             return state;
     }

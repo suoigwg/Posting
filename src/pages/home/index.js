@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import {HomeWrapper, HomeLeft, HomeRight} from "./style";
+import {HomeWrapper, HomeLeft, HomeRight, Top} from "./style";
 import Topic from './components/Topic';
 import Writer from './components/Writer';
 import List from './components/List';
 import Recommend from './components/Recommend';
 import {connect} from "react-redux";
 import {getHomeJson} from "./store/actionCreators";
+import {actionCreators} from "./store/index";
 
 class Home extends Component {
     render() {
@@ -21,17 +22,29 @@ class Home extends Component {
                     <Recommend/>
                     <Writer/>
                 </HomeRight>
+                {this.props.showTop ? <Top onClick={this.backToTop}>返回</Top> : null}
             </HomeWrapper>
         )
     }
 
     componentWillMount() {
         this.props.getInitData();
+        window.addEventListener('scroll', this.props.changeTopButtonVisibility)
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.props.changeTopButtonVisibility)
+    }
+
+    backToTop() {
+        window.scrollTo(0, 0);
     }
 }
 
 const mapStateToProps = (state /*, ownProps*/) => {
-    return {}
+    return {
+        showTop: state.getIn(['home', 'showTopButton'])
+    }
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -39,6 +52,14 @@ const mapDispatchToProps = (dispatch) => {
         getInitData() {
             const action = getHomeJson();
             dispatch(action);
+        },
+
+        changeTopButtonVisibility() {
+            if (document.documentElement.scrollTop > 5) {
+                dispatch(actionCreators.changeTopBtnAction(true));
+            } else {
+                dispatch(actionCreators.changeTopBtnAction(false));
+            }
         }
     }
 };

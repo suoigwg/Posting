@@ -176,3 +176,5 @@ export const SearchInfoItem = styled.a`
 export const SearchInfoList = styled.div`
   overflow: hidden;
 `;
+
+
