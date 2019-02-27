@@ -7,9 +7,10 @@ class List extends Component {
         const {list} = this.props;
         return (
             <Fragment>
-                {list.map((item) => {
+                {list.map((item, idx) => {
                     return (
-                        <ListItem key={item.get('id')}>
+                        //应修改为id
+                        <ListItem key={idx}>
                             <img alt='' className='pic' src={item.get('imgUrl')}/>
                             <ListInfo>
                                 <a href='/' className='title'>{item.get('title')}</a>

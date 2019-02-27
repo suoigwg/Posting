@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {HomeWrapper, HomeLeft, HomeRight, Top} from "./style";
+import {HomeWrapper, HomeLeft, HomeRight, Top, LoadMore} from "./style";
 import Topic from './components/Topic';
 import Writer from './components/Writer';
 import List from './components/List';
@@ -10,6 +10,7 @@ import {actionCreators} from "./store/index";
 
 class Home extends Component {
     render() {
+        const {page, showTop} = this.props;
         return (
             <HomeWrapper>
                 <HomeLeft>
@@ -17,12 +18,15 @@ class Home extends Component {
                          src='https://upload.jianshu.io/admin_banners/web_images/4592/2cbadf9347d69cfc140daf64de887fda0e361bcc.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540'/>
                     <Topic/>
                     <List/>
+                    <LoadMore onClick={() => {
+                        this.props.loadMoreData(page)
+                    }}>阅读更多</LoadMore>
                 </HomeLeft>
                 <HomeRight>
                     <Recommend/>
                     <Writer/>
                 </HomeRight>
-                {this.props.showTop ? <Top onClick={this.backToTop}>返回</Top> : null}
+                {showTop ? <Top onClick={this.backToTop}>返回</Top> : null}
             </HomeWrapper>
         )
     }
@@ -43,7 +47,8 @@ class Home extends Component {
 
 const mapStateToProps = (state /*, ownProps*/) => {
     return {
-        showTop: state.getIn(['home', 'showTopButton'])
+        showTop: state.getIn(['home', 'showTopButton']),
+        page: state.getIn(['home', 'page']),
     }
 };
 
@@ -52,6 +57,10 @@ const mapDispatchToProps = (dispatch) => {
         getInitData() {
             const action = getHomeJson();
             dispatch(action);
+        },
+
+        loadMoreData(page) {
+            dispatch(actionCreators.loadMoreData(page))
         },
 
         changeTopButtonVisibility() {

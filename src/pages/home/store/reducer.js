@@ -5,7 +5,8 @@ const defaultState = fromJS({
     topicList: [],
     articleList: [],
     recommendList: [],
-    showTopButton: false
+    showTopButton: false,
+    page: 1
 });
 
 export default (state = defaultState, action) => {
@@ -18,6 +19,11 @@ export default (state = defaultState, action) => {
             });
         case constants.CHANGE_TOP_BUTTON_VISIBILITY:
             return state.set('showTopButton', action.visibility);
+        case constants.LOAD_MORE_DATA:
+            return state.merge({
+                articleList: state.get('articleList').concat(action.data),
+                page: action.nextPage
+            });
         default:
             return state;
     }
