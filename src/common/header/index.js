@@ -38,7 +38,12 @@ class Header extends Component{
                     onMouseLeave={hotTopicMouseOut}
                 >
                     <SearchInfoTitle>热门搜索
-                        <SearchInfoSwitch onClick={() => switchPage(currentPage, totalPage)}>换一批</SearchInfoSwitch>
+                        <SearchInfoSwitch onClick={() => switchPage(currentPage, totalPage, this.spinIcon)}>
+                            <i ref={(icon) => {
+                                this.spinIcon = icon
+                            }} className='iconfont spin'>&#xe851;</i>
+                            换一批
+                        </SearchInfoSwitch>
                     </SearchInfoTitle>
                     <div>
                         <SearchInfoList>
@@ -72,7 +77,7 @@ class Header extends Component{
                                 onBlur={searchBarBlur}
                             />
                         </CSSTransition>
-                        <i className={focused ? 'focused iconfont' : 'iconfont'}>&#xe6e4;</i>
+                        <i className={focused ? 'focused iconfont zoom' : 'iconfont zoom'}>&#xe6e4;</i>
                         {this.showHotTopic(focused)}
                     </SearchWrapper>
                     <Addition>
@@ -116,7 +121,13 @@ const mapDispatchToProps = (dispatch)=>{
         hotTopicMouseOut() {
             dispatch(actionCreators.hotTopicMouseOutAction());
         },
-        switchPage(currentPage, totalPage) {
+        switchPage(currentPage, totalPage, spin) {
+            let previousAngle = spin.style.transform.replace(/[^0-9]/ig, '');
+            let nextAngle = 360;
+            if (previousAngle) {
+                nextAngle = parseInt(previousAngle, 10) + 360;
+            }
+            spin.style.transform = `rotate(${nextAngle}deg)`;
             if (currentPage === totalPage - 1) {
                 dispatch(actionCreators.switchPageAction(0));
             } else {
