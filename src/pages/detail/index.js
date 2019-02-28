@@ -15,7 +15,7 @@ class Detail extends Component {
     }
 
     componentDidMount() {
-        this.props.loadArticle();
+        this.props.loadArticle(this.props.match.params.id);
     }
 }
 
@@ -29,8 +29,8 @@ const mapStateToProps = (state /*, ownProps*/) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        loadArticle() {
-            dispatch(actionCreators.loadArticle());
+        loadArticle(id) {
+            dispatch(actionCreators.loadArticle(id));
         }
     }
 };

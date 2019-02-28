@@ -11,9 +11,9 @@ const loadArticleAction = (resp) => {
     }
 }
 
-export const loadArticle = () => {
+export const loadArticle = (id) => {
     return (dispatch) => {
-        axios.get('/api/detail.json').then((resp) => {
+        axios.get('/api/detail.json?id=' + id).then((resp) => {
             dispatch(loadArticleAction(resp))
         }).catch(() => {
             console.log('detail api error')

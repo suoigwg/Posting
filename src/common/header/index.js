@@ -18,6 +18,8 @@ import {
 import {CSSTransition} from 'react-transition-group'
 import * as actionCreators from './store/actionCreaters'
 import {constants} from "./store";
+import * as loginActionCreators from '../../pages/login/store/actionCreators'
+import {Link} from "react-router-dom";
 
 class Header extends Component{
 
@@ -56,15 +58,15 @@ class Header extends Component{
     }
 
     render() {
-        const {focused, list, searchBarFocused, searchBarBlur} = this.props;
+        const {focused, list, searchBarFocused, searchBarBlur, login} = this.props;
         return(
             <HeaderWrapper>
                 <Logo/>
                 <Nav>
-                    <NavItem className='left active'>首页</NavItem>
-                    <NavItem className='left '>下载App</NavItem>
-                    <NavItem className='right '>登录</NavItem>
-                    <NavItem className='right '><i className='iconfont'>&#xe636;</i></NavItem>
+                    <Link to='/'><NavItem className='left active'>首页</NavItem></Link>
+                    <NavItem className='left'>下载App</NavItem>
+                    <NavItem className='right' onClick={this.toggleLogin.bind(this)}>{login ? '退出' : '登录'}</NavItem>
+                    <NavItem className='right'><i className='iconfont'>&#xe636;</i></NavItem>
                     <SearchWrapper>
                         <CSSTransition
                             in={focused}
@@ -91,6 +93,13 @@ class Header extends Component{
         )
     }
 
+    toggleLogin() {
+        if (this.props.login) {
+            this.props.logout();
+        } else {
+            window.location = '/login';
+        }
+    }
 
 }
 
@@ -101,7 +110,7 @@ const mapStateToProps = (state /*, ownProps*/) => {
         mouseIn: state.getIn(['header', 'mouseIn']),
         currentPage: state.getIn(['header', 'currentPage']),
         totalPage: state.getIn(['header', 'totalPage']),
-
+        login: state.getIn(['login', 'login']),
     }
 };
 
@@ -135,7 +144,12 @@ const mapDispatchToProps = (dispatch)=>{
             } else {
                 dispatch(actionCreators.switchPageAction(currentPage + 1));
             }
+        },
+
+        logout() {
+            dispatch(loginActionCreators.logout());
         }
+
 
     }
 };

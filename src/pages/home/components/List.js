@@ -11,7 +11,7 @@ class List extends Component {
                 {list.map((item, idx) => {
                     return (
                         //应修改为id
-                        <Link key={idx} to='/detail'>
+                        <Link key={idx} to={'/detail/' + item.get('id')}>
                             <ListItem>
                                 <img alt='' className='pic' src={item.get('imgUrl')}/>
                                 <ListInfo>
