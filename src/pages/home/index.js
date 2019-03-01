@@ -33,6 +33,7 @@ class Home extends Component {
 
     componentWillMount() {
         this.props.getInitData();
+        this.props.loadAuthorData();
         window.addEventListener('scroll', this.props.changeTopButtonVisibility)
     }
 
@@ -69,6 +70,9 @@ const mapDispatchToProps = (dispatch) => {
             } else {
                 dispatch(actionCreators.changeTopBtnAction(false));
             }
+        },
+        loadAuthorData() {
+            dispatch(actionCreators.loadAuthorData());
         }
     }
 };

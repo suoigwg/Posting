@@ -6,7 +6,8 @@ const defaultState = fromJS({
     articleList: [],
     recommendList: [],
     showTopButton: false,
-    page: 1
+    page: 1,
+    authorList: []
 });
 
 export default (state = defaultState, action) => {
@@ -24,6 +25,8 @@ export default (state = defaultState, action) => {
                 articleList: state.get('articleList').concat(action.data),
                 page: action.nextPage
             });
+        case constants.LOAD_AUTHOR_DATA:
+            return state.set("authorList", action.data);
         default:
             return state;
     }

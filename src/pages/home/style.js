@@ -11,7 +11,7 @@ export const HomeLeft = styled.div`
   float: left;
   margin-left: 15px;
   padding-top: 30px;
-  width: 625px;
+  width: 640px;
   .banner-img{
     height: 270px;
     width: 625px;
@@ -20,7 +20,7 @@ export const HomeLeft = styled.div`
 
 export const HomeRight = styled.div`
   float: right;
-  width: 240px;
+  width: 280px;
 
 `;
 
@@ -111,4 +111,66 @@ export const LoadMore = styled.div`
   text-align: center;
   border-radius: 20px;
   color: #fff;
+`;
+
+export const WriterWrapper = styled.div`
+  a {
+  cursor: pointer;
+  }
+`;
+
+
+export const WriterList = styled.ul`
+  margin: 0 0 20px;
+  text-align: left;
+  list-style: none;
+`;
+
+export const WriterListItem = styled.li`
+  margin-top: 15px;
+  .follow{
+    float: right;
+    font-size: 13px;
+    font-weight: 400;
+    color: #42c02e;
+  }
+  .avatar{
+    float: left;
+    width: 48px;
+    height: 48px;
+    margin-right: 10px;
+    img {
+      width: 100%;
+      height: 100%;
+      border: 1px solid #ddd;
+      border-radius: 50%;    
+    }
+  }
+  
+  .name{
+    padding-top: 5px;
+    margin-right: 60px;
+    font-size: 14px;
+    display: block;
+    line-height: 20px;
+  }
+  
+  p{
+    margin-top: 2px;
+    font-size: 12px;
+    color: #969696;
+  }
+
+`;
+
+export const LoadMoreAuthor = styled.a`
+    padding: 7px 0;
+    width: 98%;
+    font-size: 13px;
+    color: #787878;
+    background-color: #f7f7f7;
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+    display: block;
+    text-align: center;
 `;

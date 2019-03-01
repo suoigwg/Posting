@@ -20,6 +20,13 @@ const loadMoreDataAction = (resp, nextPage) => {
     }
 };
 
+const loadAuthorAction = (data) => {
+    return {
+        type: constants.LOAD_AUTHOR_DATA,
+        data: fromJS(data)
+    }
+}
+
 export const changeTopBtnAction = (visibility) => {
     return {
         type: constants.CHANGE_TOP_BUTTON_VISIBILITY,
@@ -47,3 +54,16 @@ export const loadMoreData = (page) => {
         })
     }
 };
+
+
+export const loadAuthorData = () => {
+    return (dispatch) => {
+        axios.get(`/api/authors.json`).then((resp) => {
+            dispatch(loadAuthorAction(resp.data.data));
+        }).catch(() => {
+            console.log('author api error');
+        });
+
+    }
+};
+
