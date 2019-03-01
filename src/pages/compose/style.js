@@ -1,14 +1,20 @@
 import styled from 'styled-components';
 
 export const ComposerWrapper = styled.div`
-  height: 100%;
-  display: flex;
+    height: 100%;  
+    width: 100%;  
+    position: absolute;  
+    top: 0px;  
+    bottom: 0px;  
+    display: flex;
 `;
 
 
 export const DirectoryWrapper = styled.div`
   flex: 1;
   background: #404040;
+  overflow: scroll;
+
 `;
 
 export const HomeBtn = styled.div`
@@ -16,6 +22,7 @@ export const HomeBtn = styled.div`
   padding: 50px 18px 5px;
   text-align: center;
   a{
+    text-decoration: none;
     display: block;
     font-size: 15px;
     padding: 9px 0;
@@ -95,8 +102,10 @@ export const DirectoryList = styled.ul`
 `;
 
 export const DirectoryItem = styled.li`
-    background-color: #666;
-    border-left: 3px solid #ec7259;
+    &.active{
+      background-color: #666;
+      border-left: 3px solid #ec7259;    
+    }
     position: relative;
     line-height: 40px;
     list-style: none;
@@ -116,13 +125,12 @@ export const NewArticleBtn = styled.ul`
 `;
 
 export const ArticleList = styled.ul`
-  
+
 `;
 
 export const ArticleItem = styled.li`
   border-left-color: #ec7259;
-  background-color: #e6e6e6;
-box-shadow: 0 0 0 1px #d9d9d9;
+  box-shadow: 0 0 0 1px #d9d9d9;
     border-left: 5px solid ;
     list-style: none;
     line-height: 60px;
@@ -130,11 +138,15 @@ box-shadow: 0 0 0 1px #d9d9d9;
         margin-bottom: 0;
     padding: 15px 10px 15px 60px;  
     box-sizing: border-box;
+   &.active{
+    background-color: #e6e6e6;
+  }
 `;
 
 
 export const ArticleWrapper = styled.div`
   flex: 1.67;
+  overflow: scroll;
 `;
 
 export const EditorWrapper = styled.div`
