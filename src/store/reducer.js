@@ -3,10 +3,11 @@ import headerReducer from "../common/header/store/reducer"
 import homeReducer from "../pages/home/store/reducer"
 import detailReducer from "../pages/detail/store/reducer"
 import loginReducer from "../pages/login/store/reducer";
-
+import composerReducer from "../pages/compose/store/reducer";
 export const reducer =  combineReducers({
     header: headerReducer,
     home: homeReducer,
     detail: detailReducer,
-    login: loginReducer
+    login: loginReducer,
+    composer: composerReducer
 });
