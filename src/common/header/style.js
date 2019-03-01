@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-
+import LogoPic from '../../statics/imgs/logo.png'
 export const HeaderWrapper = styled.div`
   position: relative;
   height: 58px;
@@ -16,8 +16,8 @@ export const Logo = styled.a.attrs(
   display: block;
   width: 100px;
   height: 56px;
-  background: orange;
-  
+  background: url(${LogoPic});
+  background-size:contain;
 `;
 
 export const Nav = styled.div`
@@ -175,5 +175,4 @@ export const SearchInfoItem = styled.a`
 export const SearchInfoList = styled.div`
   overflow: hidden;
 `;
-
 
