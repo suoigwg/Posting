@@ -4,7 +4,7 @@ import * as actionCreators from "./store/actionCreators";
 import {connect} from "react-redux";
 import {Redirect} from "react-router-dom";
 
-class Detail extends Component {
+class Login extends Component {
     render() {
         if (!this.props.loginState) {
             return (
@@ -48,4 +48,4 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Detail);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
