@@ -17,17 +17,16 @@ class Profile extends Component {
 
     state = {
         current: 'mail',
-    }
+    };
 
     handleClick = (e) => {
-        console.log('click ', e);
         this.setState({
             current: e.key,
         });
-    }
+    };
 
     render() {
-        const {username, following, wordCount, articleCount, avatarUrl, follower} = this.props;
+        const {timeline, username, following, wordCount, articleCount, avatarUrl, follower} = this.props;
         return (
             <div className={'profile-wrapper'}>
                 <div className={'profile-header'}>
@@ -71,10 +70,12 @@ class Profile extends Component {
                     </div>
                     <div className={'menu-timeline'}>
                         <Timeline>
-                            <Timeline.Item>Create a services site 2015-09-01</Timeline.Item>
-                            <Timeline.Item>Solve initial network problems 2015-09-01</Timeline.Item>
-                            <Timeline.Item>Technical testing 2015-09-01</Timeline.Item>
-                            <Timeline.Item>Network problems being solved 2015-09-01</Timeline.Item>
+                            {timeline.map((item, idx) => {
+                                return <Timeline.Item>
+                                    <p>于{item.timestamp}发表了新闻文章{item.title}</p>
+                                    <p>{item.content}</p>
+                                </Timeline.Item>
+                            })}
                         </Timeline>
                     </div>
                 </div>
@@ -97,7 +98,7 @@ const mapStateToProps = (state /*, ownProps*/) => {
         articleCount: state.getIn(['profile', 'articleCount']),
         avatarUrl: state.getIn(['profile', 'avatarUrl']),
         follower: state.getIn(['profile', 'follower']),
-
+        timeline: state.getIn(['profile', 'timeline']),
     };
 };
 
@@ -105,7 +106,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         loadProfile() {
             dispatch(actionCreators.loadUserProfile(1))
-        }
+        },
+
     };
 };
 

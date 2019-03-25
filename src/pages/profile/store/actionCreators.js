@@ -2,7 +2,8 @@ import axios from 'axios';
 import * as constants from './constants'
 
 const loadProfileAction = (data) => {
-    const {username, following, wordCount, articleCount, avatarUrl, follower} = data;
+    console.log(data);
+    const {timeline, username, following, wordCount, articleCount, avatarUrl, follower} = data;
     return {
         type: constants.LOAD_USER_PROFILE,
         data: {
@@ -11,15 +12,22 @@ const loadProfileAction = (data) => {
             wordCount,
             articleCount,
             avatarUrl,
-            follower
+            follower,
+            timeline
         }
     }
-}
+};
+
 
 export const loadUserProfile = (userid) => {
     return (dispatch) => {
         axios.get('/api/profile.json').then((resp) => {
-            dispatch(loadProfileAction(resp.data))
+            const userdata = resp.data;
+            axios.get('/api/articleUpdate.json').then((resp) => {
+                userdata['timeline'] = resp.data;
+                dispatch(loadProfileAction(userdata))
+            })
         })
     }
-}
+};
+
