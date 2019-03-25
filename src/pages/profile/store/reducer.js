@@ -16,6 +16,8 @@ export default (state = defaultState, action) => {
         case constants.LOAD_USER_PROFILE:
             console.log(action.data);
             return state.merge(action.data);
+        case constants.LOAD_USER_TIMELINE:
+            return state.set('timeline', action.timeline);
         default:
             return state;
     }

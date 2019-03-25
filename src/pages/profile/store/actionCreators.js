@@ -18,6 +18,14 @@ const loadProfileAction = (data) => {
     }
 };
 
+const loadActivityAction = (timeline) => {
+    return {
+        type: constants.LOAD_USER_TIMELINE,
+        timeline
+    }
+};
+
+
 
 export const loadUserProfile = (userid) => {
     return (dispatch) => {
@@ -31,3 +39,19 @@ export const loadUserProfile = (userid) => {
     }
 };
 
+
+export const loadUserActivity = (userid) => {
+    return (dispatch) => {
+        axios.get('/api/activity.json').then((resp) => {
+            dispatch(loadActivityAction(resp.data));
+        }).catch(() => console.log("无法加载用户活动列表"));
+    }
+};
+
+export const loadPublishActivity = (userid) => {
+    return (dispatch) => {
+        axios.get('/api/articleUpdate.json').then((resp) => {
+            dispatch(loadActivityAction(resp.data));
+        }).catch(() => console.log("无法加载用户活动列表"));
+    }
+};

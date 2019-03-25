@@ -13,16 +13,31 @@ const {Title, Paragraph, Text} = Typography;
 class Profile extends Component {
     constructor(props) {
         super(props);
+        this.handleClick = this.handleClick.bind(this);
     }
 
     state = {
-        current: 'mail',
+        current: 'publish',
+        action: '发表',
     };
 
     handleClick = (e) => {
         this.setState({
             current: e.key,
         });
+        switch (e.key) {
+            case "update":
+                this.props.loadActivity();
+                this.setState({action: '点赞'});
+                break;
+            case "publish":
+                this.props.loadUpdate();
+                this.setState({action: '发表'});
+                break;
+            default:
+                return;
+
+        }
     };
 
     render() {
@@ -59,7 +74,7 @@ class Profile extends Component {
                             mode="horizontal"
                             className={'profile-menu'}
                         >
-                            <Menu.Item key="mail">
+                            <Menu.Item key="publish">
                                 <Icon type="mail"/>文章
                             </Menu.Item>
                             <Menu.Item key="update">
@@ -72,7 +87,7 @@ class Profile extends Component {
                         <Timeline>
                             {timeline.map((item, idx) => {
                                 return <Timeline.Item>
-                                    <p>于{item.timestamp}发表了新闻文章{item.title}</p>
+                                    <p>于{item.timestamp}{this.state.action}了新闻文章{item.title}</p>
                                     <p>{item.content}</p>
                                 </Timeline.Item>
                             })}
@@ -107,7 +122,12 @@ const mapDispatchToProps = (dispatch) => {
         loadProfile() {
             dispatch(actionCreators.loadUserProfile(1))
         },
-
+        loadActivity() {
+            dispatch(actionCreators.loadUserActivity(1));
+        },
+        loadUpdate() {
+            dispatch(actionCreators.loadPublishActivity(1));
+        }
     };
 };
 
