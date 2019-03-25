@@ -3,17 +3,18 @@ import * as constants from './constants'
 import {fromJS} from "immutable";
 
 
-const loginAction = (loginState) => {
+const loginSuccessAction = (data) => {
     return {
         type: constants.LOGIN,
-        login: loginState
+        data,
+        login: true
     }
 };
 
 
 export const logout = () => {
     return (dispatch) => {
-        dispatch(loginAction(false));
+        dispatch(loginSuccessAction(false));
     }
 };
 
@@ -27,11 +28,11 @@ export const toggleHeader = (visibility) => {
 
 export const authenticate = (username, password) => {
     return (dispatch) => {
-        //此处应该为post
-        axios.get('/api/login.json').then((resp) => {
-            dispatch(loginAction(resp.data.data))
+        console.log(username, password);
+        axios.post('http://localhost:8000/login', {username, password}).then((resp) => {
+            dispatch(loginSuccessAction(resp.data))
         }).catch(() => {
-            console.log('auth api error')
+            console.log('Wrong credentials')
         })
     }
 };

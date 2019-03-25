@@ -17,12 +17,17 @@ import {connect} from "react-redux";
 import {Redirect} from "react-router-dom";
 import logoImg from '../../statics/imgs/logo_big.png'
 class Login extends Component {
+    constructor(props) {
+        super(props);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
     render() {
         if (!this.props.loginState) {
             return (
                 <LoginWrapper>
                     <LogoWrapper>
-                        <a><img src={logoImg}/></a>
+                        <a href={'/'}><img src={logoImg}/></a>
                     </LogoWrapper>
                     <LoginBox>
                         <LabelWrapper>
@@ -33,13 +38,10 @@ class Login extends Component {
                             </div>
                         </LabelWrapper>
                         <CenterDiv>
-                            <LoginForm id={'loginForm'} method={'POST'} action={'http://localhost:8000/login'}>
-                                <Input name={'username'} placeholder='手机号或邮箱' innerRef={(input) => {
-                                    this.account = input
-                                }}/>
-                                <Input name={'password'} placeholder='密码' type='password' innerRef={(input) => {
-                                    this.password = input
-                                }}/>
+                            <LoginForm onSubmit={this.handleSubmit} id={'loginForm'} method={'POST'}
+                                       action={'http://localhost:8000/login'}>
+                                <Input name={'username'} placeholder='手机号或邮箱'/>
+                                <Input name={'password'} placeholder='密码' type='password'/>
                             </LoginForm>
                             <Button type={'submit'} form={'loginForm'}>登录</Button>
                         </CenterDiv>
@@ -55,12 +57,11 @@ class Login extends Component {
 
     }
 
-    componentDidMount() {
-        this.props.toggleHeader(true);
-    }
-
-    componentWillUnmount() {
-        this.props.toggleHeader(false);
+    handleSubmit(event) {
+        event.preventDefault();
+        const username = event.target.username.value;
+        const password = event.target.password.value;
+        this.props.login(username, password);
     }
 }
 
@@ -74,11 +75,10 @@ const mapStateToProps = (state /*, ownProps*/) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         login(username, password) {
-            console.log("login");
-            dispatch(actionCreators.authenticate(username.value, password.value));
+            dispatch(actionCreators.authenticate(username, password));
         },
-        toggleHeader(visiblity) {
-            dispatch(actionCreators.toggleHeader(visiblity));
+        toggleHeader(visibility) {
+            dispatch(actionCreators.toggleHeader(visibility));
         }
 
     };

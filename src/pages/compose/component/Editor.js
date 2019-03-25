@@ -7,10 +7,10 @@ export default class BasicDemo extends React.Component {
     state = {
         editorState: BraftEditor.createEditorState('<p>Hello <b>World!</b></p>'), // 设置编辑器初始内容
         outputHTML: '<p></p>'
-    }
+    };
 
     componentDidMount() {
-        this.isLivinig = true
+        this.isLivinig = true;
         // 3秒后更改编辑器内容
         setTimeout(this.setEditorContentAsync, 3000)
     }
@@ -24,13 +24,21 @@ export default class BasicDemo extends React.Component {
             editorState: editorState,
             outputHTML: editorState.toHTML()
         })
-    }
+    };
 
     setEditorContentAsync = () => {
         this.isLivinig && this.setState({
             editorState: BraftEditor.createEditorState('<p>你好，<b>世界!</b><p>')
         })
+    };
+
+    submitContent = async () => {
+        // 在编辑器获得焦点时按下ctrl+s会执行此方法
+        // 编辑器内容提交到服务端之前，可直接调用editorState.toHTML()来获取HTML格式的内容
+        const htmlContent = this.state.editorState.toHTML()
+        // const result = await saveEditorContent(htmlContent)
     }
+
 
     render() {
 

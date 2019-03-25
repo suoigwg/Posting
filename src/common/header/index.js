@@ -62,7 +62,7 @@ class Header extends Component{
         if (hideHeader) return '';
         return(
             <HeaderWrapper>
-                <Logo/>
+                <Link to={'/'}><Logo/></Link>
                 <Nav>
                     <Link to='/'><NavItem className='left active'>首页</NavItem></Link>
                     <NavItem className='left'>下载App</NavItem>
@@ -86,7 +86,9 @@ class Header extends Component{
                         {this.showHotTopic(focused)}
                     </SearchWrapper>
                     <Addition>
-                        <Button className='reg'><i className='iconfont'>&#xe615;</i>写文章</Button>
+                        <Link to={'/compose'}>
+                            <Button className='reg'><i className='iconfont'>&#xe615;</i>写文章</Button>
+                        </Link>
                         <Button className='writing'>注册</Button>
                     </Addition>
                 </Nav>

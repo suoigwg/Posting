@@ -21,7 +21,6 @@ import {Link} from "react-router-dom";
 import BasicDemo from "./component/Editor"
 
 class Composer extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -128,6 +127,14 @@ class Composer extends Component {
         )
     }
 
+    componentDidMount() {
+        this.props.toggleHeader(true);
+    }
+
+    componentWillUnmount() {
+        this.props.toggleHeader(false);
+    }
+
 }
 
 
@@ -135,7 +142,8 @@ const mapStateToProps = (state /*, ownProps*/) => {
     return {
         showDir: state.getIn(['composer', 'showCreateDir']),
         article: state.getIn(['composer', 'article']),
-        directory: state.getIn(['composer', 'directory'])
+        directory: state.getIn(['composer', 'directory']),
+
     };
 };
 
@@ -152,6 +160,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         createNewDir(dirName) {
             dispatch(actionCreators.createDirAction(dirName));
+        },
+        toggleHeader(visibility) {
+            dispatch(actionCreators.toggleHeader(visibility));
         }
 
     };

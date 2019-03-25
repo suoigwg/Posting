@@ -32,4 +32,11 @@ export const createDirAction = (newDirName) => {
     }
 };
 
+export const toggleHeader = (visibility) => {
+    return {
+        type: constants.TOGGLE_HEADER,
+        visibility
+    }
+};
+
 
