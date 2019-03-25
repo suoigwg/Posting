@@ -58,7 +58,8 @@ class Header extends Component{
     }
 
     render() {
-        const {focused, list, searchBarFocused, searchBarBlur, login} = this.props;
+        const {hideHeader, focused, list, searchBarFocused, searchBarBlur, login} = this.props;
+        if (hideHeader) return '';
         return(
             <HeaderWrapper>
                 <Logo/>
@@ -111,6 +112,7 @@ const mapStateToProps = (state /*, ownProps*/) => {
         currentPage: state.getIn(['header', 'currentPage']),
         totalPage: state.getIn(['header', 'totalPage']),
         login: state.getIn(['login', 'login']),
+        hideHeader: state.getIn(['login', 'hideHeader']),
     }
 };
 

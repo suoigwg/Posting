@@ -17,6 +17,13 @@ export const logout = () => {
     }
 };
 
+export const toggleHeader = (visibility) => {
+    return {
+        type: constants.TOGGLE_HEADER,
+        visibility
+    }
+};
+
 
 export const authenticate = (username, password) => {
     return (dispatch) => {

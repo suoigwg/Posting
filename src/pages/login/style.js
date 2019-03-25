@@ -1,5 +1,6 @@
-import styled from 'styled-components';
+import styled, {injectGlobal} from 'styled-components';
 import LogoPic from '../../statics/imgs/logo_big.png';
+
 
 export const LogoWrapper = styled.div`
   position: absolute;
@@ -18,8 +19,7 @@ export const Logo = styled.a`
 export const LoginWrapper = styled.div`
   background: #eee;
   z-index: 0;
-  height: 100%;  
-  width: 100%;  
+  min-height:100vh;
   text-align: center;
 `;
 

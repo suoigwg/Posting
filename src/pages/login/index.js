@@ -33,20 +33,15 @@ class Login extends Component {
                             </div>
                         </LabelWrapper>
                         <CenterDiv>
-                            <LoginForm>
-                                <Input placeholder='手机号或邮箱' innerRef={(input) => {
+                            <LoginForm id={'loginForm'} method={'POST'} action={'http://localhost:8000/login'}>
+                                <Input name={'username'} placeholder='手机号或邮箱' innerRef={(input) => {
                                     this.account = input
                                 }}/>
-                                <Input placeholder='密码' type='password' innerRef={(input) => {
+                                <Input name={'password'} placeholder='密码' type='password' innerRef={(input) => {
                                     this.password = input
                                 }}/>
-                                <Remember>
-                                    <input type='checkbox'/><span>记住我</span>
-                                </Remember>
-                                <Button onClick={() => {
-                                    this.props.login(this.account, this.password)
-                                }}>登录</Button>
                             </LoginForm>
+                            <Button type={'submit'} form={'loginForm'}>登录</Button>
                         </CenterDiv>
 
 
@@ -60,6 +55,13 @@ class Login extends Component {
 
     }
 
+    componentDidMount() {
+        this.props.toggleHeader(true);
+    }
+
+    componentWillUnmount() {
+        this.props.toggleHeader(false);
+    }
 }
 
 
@@ -74,6 +76,9 @@ const mapDispatchToProps = (dispatch) => {
         login(username, password) {
             console.log("login");
             dispatch(actionCreators.authenticate(username.value, password.value));
+        },
+        toggleHeader(visiblity) {
+            dispatch(actionCreators.toggleHeader(visiblity));
         }
 
     };
