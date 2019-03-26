@@ -11,11 +11,13 @@ export const ComposerWrapper = styled.div`
 
 
 export const EditorWrapper = styled.div`
-  flex: 3.33;
+    width: 100%;
 `;
 
-export const EditorTitle = styled.input`
-    width: 100%;
+export const EditorTitle = styled.input.attrs(
+    {placeholder: '请输入标题'}
+)`
+    width: 960px;
     padding: 0 80px 10px 40px;
     margin-bottom: 0;
     border: none;
@@ -30,4 +32,10 @@ export const EditorTitle = styled.input`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+`;
+
+export const ButtonWrapper = styled.div`
+  float:right;
+  display: flex;
+  justify-content: space-around;
 `;
