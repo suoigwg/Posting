@@ -29,9 +29,9 @@ const loadActivityAction = (timeline) => {
 
 export const loadUserProfile = (userid) => {
     return (dispatch) => {
-        axios.get('/api/profile.json').then((resp) => {
+        axios.get('http://localhost:8000/user/' + userid).then((resp) => {
             const userdata = resp.data;
-            axios.get('/api/articleUpdate.json').then((resp) => {
+            axios.get('http://localhost:8000/publish/' + userid).then((resp) => {
                 userdata['timeline'] = resp.data;
                 dispatch(loadProfileAction(userdata))
             })
@@ -42,7 +42,7 @@ export const loadUserProfile = (userid) => {
 
 export const loadUserActivity = (userid) => {
     return (dispatch) => {
-        axios.get('/api/activity.json').then((resp) => {
+        axios.get('http://localhost:8000/likes/' + userid).then((resp) => {
             dispatch(loadActivityAction(resp.data));
         }).catch(() => console.log("无法加载用户活动列表"));
     }
@@ -50,7 +50,7 @@ export const loadUserActivity = (userid) => {
 
 export const loadPublishActivity = (userid) => {
     return (dispatch) => {
-        axios.get('/api/articleUpdate.json').then((resp) => {
+        axios.get('http://localhost:8000/publish/' + userid).then((resp) => {
             dispatch(loadActivityAction(resp.data));
         }).catch(() => console.log("无法加载用户活动列表"));
     }

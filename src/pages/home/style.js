@@ -127,6 +127,7 @@ export const WriterList = styled.ul`
 `;
 
 export const WriterListItem = styled.li`
+  clear: both;
   margin-top: 15px;
   .follow{
     float: right;

@@ -27,11 +27,11 @@ class Profile extends Component {
         });
         switch (e.key) {
             case "update":
-                this.props.loadActivity();
+                this.props.loadActivity(this.props.match.params.id);
                 this.setState({action: '点赞'});
                 break;
             case "publish":
-                this.props.loadUpdate();
+                this.props.loadUpdate(this.props.match.params.id);
                 this.setState({action: '发表'});
                 break;
             default:
@@ -49,7 +49,7 @@ class Profile extends Component {
                         <Avatar size={128} icon="user" src={avatarUrl}/>
                     </div>
                     <div className={'profile-userinfo'}>
-                        <Title>Username</Title>
+                        <Title>@{username}</Title>
                         <Row className={'statistic-row'} justify={'space-around'} type={'flex'} gutter={8}>
                             <Col span={6}>
                                 <Statistic title="关注" value={following}/>
@@ -86,8 +86,9 @@ class Profile extends Component {
                     <div className={'menu-timeline'}>
                         <Timeline>
                             {timeline.map((item, idx) => {
+                                const time = new Date(parseInt(item.timestamp, 10));
                                 return <Timeline.Item>
-                                    <p>于{item.timestamp}{this.state.action}了新闻文章{item.title}</p>
+                                    <p>于{time.toString()}{this.state.action}了新文章《{item.title}》</p>
                                     <p>{item.content}</p>
                                 </Timeline.Item>
                             })}
@@ -99,7 +100,7 @@ class Profile extends Component {
     }
 
     componentDidMount() {
-        this.props.loadProfile();
+        this.props.loadProfile(this.props.match.params.id);
     }
 
 }
@@ -119,14 +120,14 @@ const mapStateToProps = (state /*, ownProps*/) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        loadProfile() {
-            dispatch(actionCreators.loadUserProfile(1))
+        loadProfile(id) {
+            dispatch(actionCreators.loadUserProfile(id))
         },
-        loadActivity() {
-            dispatch(actionCreators.loadUserActivity(1));
+        loadActivity(id) {
+            dispatch(actionCreators.loadUserActivity(id));
         },
-        loadUpdate() {
-            dispatch(actionCreators.loadPublishActivity(1));
+        loadUpdate(id) {
+            dispatch(actionCreators.loadPublishActivity(id));
         }
     };
 };
