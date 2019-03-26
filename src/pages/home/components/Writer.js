@@ -3,6 +3,7 @@ import {LoadMoreAuthor, WriterList, WriterListItem, WriterWrapper} from "../styl
 import {connect} from "react-redux";
 import {actionCreators} from "../store/actionCreators"
 import {Link} from "react-router-dom";
+import {Avatar} from "antd";
 
 class Writer extends Component {
     render() {
@@ -13,11 +14,13 @@ class Writer extends Component {
                         this.props.authors.map((item, idx) => {
                             return (
                                 <WriterListItem>
-                                    <a className='avatar'><img src={''}/></a>
-                                    <a className='follow'>+关注</a>
-                                    <Link to={'/user/' + item.id}>
-                                        <a className='name'>{item.username}</a>
-                                    </Link>
+                                    <Avatar size={64} icon={'user'}/>
+                                    <div style={{padding: '10px 0 0 15px'}}>
+                                        <a className='follow'>+关注</a>
+                                        <Link to={'/user/' + item.id}>
+                                            <a className='name'>{item.username}</a>
+                                        </Link>
+                                    </div>
                                     <p></p>
                                 </WriterListItem>
                             )

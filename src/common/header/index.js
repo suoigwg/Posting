@@ -20,7 +20,12 @@ import * as actionCreators from './store/actionCreaters'
 import {constants} from "./store";
 import * as loginActionCreators from '../../pages/login/store/actionCreators'
 import {Link} from "react-router-dom";
-import {Avatar} from "antd";
+import {Avatar, message} from "antd";
+
+message.config({
+    duration: 1,
+    maxCount: 2,
+});
 
 class Header extends Component{
 
@@ -71,6 +76,10 @@ class Header extends Component{
         }
     }
 
+    notImplemented() {
+        message.warning("此功能暂未开放");
+    }
+
     render() {
         const {hideHeader, focused, list, searchBarFocused, searchBarBlur, login} = this.props;
         if (hideHeader) return '';
@@ -79,7 +88,7 @@ class Header extends Component{
                 <Link to={'/'}><Logo/></Link>
                 <Nav>
                     <Link to='/'><NavItem className='left active'>首页</NavItem></Link>
-                    <NavItem className='left'>下载App</NavItem>
+                    <NavItem className='left' onClick={this.notImplemented}>下载App</NavItem>
                     <NavItem className='right' onClick={this.toggleLogin.bind(this)}>{this.userState()}</NavItem>
                     <NavItem className='right'><i className='iconfont'>&#xe636;</i></NavItem>
                     <SearchWrapper>
@@ -100,10 +109,18 @@ class Header extends Component{
                         {this.showHotTopic(focused)}
                     </SearchWrapper>
                     <Addition>
-                        <Link to={'/compose'}>
+                        {login
+                            ? (
+                                <Link to={'/compose'}>
                             <Button className='reg'><i className='iconfont'>&#xe615;</i>写文章</Button>
-                        </Link>
-                        {!login ? <Button className='writing'>注册</Button> : ''}
+                                </Link>
+                            )
+                            : ''
+                        }
+                        {!login
+                            ? <Button className='writing' onClick={this.notImplemented}>注册</Button>
+                            : ''
+                        }
                     </Addition>
                 </Nav>
             </HeaderWrapper>
