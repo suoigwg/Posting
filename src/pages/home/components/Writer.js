@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
-import {WriterList, WriterListItem, WriterWrapper, LoadMoreAuthor} from "../style";
+import {LoadMoreAuthor, WriterList, WriterListItem, WriterWrapper} from "../style";
 import {connect} from "react-redux";
 import {actionCreators} from "../store/actionCreators"
+import {Link} from "react-router-dom";
+
 class Writer extends Component {
     render() {
         return (
@@ -11,10 +13,12 @@ class Writer extends Component {
                         this.props.authors.map((item, idx) => {
                             return (
                                 <WriterListItem>
-                                    <a className='avatar'><img src={item.get('imgUrl')}/></a>
+                                    <a className='avatar'><img src={''}/></a>
                                     <a className='follow'>+关注</a>
-                                    <a className='name'>{item.get('author')}</a>
-                                    <p>{item.get('desc')}</p>
+                                    <Link to={'/user/' + item.id}>
+                                        <a className='name'>{item.username}</a>
+                                    </Link>
+                                    <p></p>
                                 </WriterListItem>
                             )
                         })

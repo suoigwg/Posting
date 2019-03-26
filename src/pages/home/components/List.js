@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from "react-redux";
-import {ListItem, ListInfo} from "../style"
+import {ListInfo, ListItem} from "../style"
 import {Link} from "react-router-dom";
 
 class List extends Component {
@@ -10,13 +10,12 @@ class List extends Component {
             <Fragment>
                 {list.map((item, idx) => {
                     return (
-                        //应修改为id
-                        <Link key={idx} to={'/detail/' + item.get('id')}>
+                        <Link key={item.id} to={'/detail/' + item.id}>
                             <ListItem>
-                                <img alt='' className='pic' src={item.get('imgUrl')}/>
+                                <img alt='' className='pic' src={''}/>
                                 <ListInfo>
-                                    <p>{item.get('title')}</p>
-                                    <p className='brief'>{item.get('desc')}</p>
+                                    <p>{item.title}</p>
+                                    <p className='brief'>{item.content}</p>
                                 </ListInfo>
                             </ListItem>
                         </Link>

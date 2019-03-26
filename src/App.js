@@ -1,4 +1,4 @@
-import React,{Component} from 'react';
+import React, {Component} from 'react';
 import Header from './common/header/index'
 import {Provider} from 'react-redux'
 import store from "./store/store"
@@ -8,6 +8,7 @@ import Detail from './pages/detail/index'
 import Login from './pages/login/index'
 import Composer from './pages/compose/index'
 import Profile from './pages/profile/index'
+
 class App extends Component{
     render() {
         return(
@@ -19,7 +20,7 @@ class App extends Component{
                             <Route path='/' exact component={Home}/>
                             <Route path='/detail/:id' exact component={Detail}/>
                             <Route path='/login' exact component={Login}/>
-                            <Route path='/profile' exact component={Profile}/>
+                            <Route path='/user/:id' exact component={Profile}/>
                         </div>
                         <Route path='/compose' exact component={Composer}/>
                     </div>

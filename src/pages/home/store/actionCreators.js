@@ -1,29 +1,27 @@
 import axios from 'axios';
 import * as constants from './constants'
-import {fromJS} from "immutable";
 
-const initHomeDataAction = (resp) => {
+const initHomeDataAction = (data) => {
+    // console.log(data);
     return {
         type: constants.INIT_HOME_DATA_ACTION,
-        topicList: fromJS(resp.data.data.topicList),
-        recommendList: fromJS(resp.data.data.recommendList),
-        articleList: fromJS(resp.data.data.articleList)
+        articleList: data
     }
 
 };
 
-const loadMoreDataAction = (resp, nextPage) => {
+const loadMoreDataAction = (data, page) => {
     return {
         type: constants.LOAD_MORE_DATA,
-        nextPage,
-        data: fromJS(resp.data.data)
+        page,
+        data
     }
 };
 
 const loadAuthorAction = (data) => {
     return {
         type: constants.LOAD_AUTHOR_DATA,
-        data: fromJS(data)
+        data: data
     }
 }
 
@@ -37,18 +35,19 @@ export const changeTopBtnAction = (visibility) => {
 
 export const getHomeJson = () => {
     return (dispatch) => {
-        axios.get('/api/home.json').then((resp) => {
-            dispatch(initHomeDataAction(resp));
+        axios.get('http://localhost:8000/article/list').then((resp) => {
+            console.log(resp.data);
+            dispatch(initHomeDataAction(resp.data));
         }).catch(() => {
-            console.log('api error');
+            console.log('获取主页文章失败');
         })
     }
 };
 
 export const loadMoreData = (page) => {
     return (dispatch) => {
-        axios.get(`/api/homeList.json?page=${page}`).then((resp) => {
-            dispatch(loadMoreDataAction(resp, page));
+        axios.get(`http://localhost:8000/article/list/?page=${page}`).then((resp) => {
+            dispatch(loadMoreDataAction(resp.data, page));
         }).catch(() => {
             console.log('api error');
         })
@@ -58,10 +57,10 @@ export const loadMoreData = (page) => {
 
 export const loadAuthorData = () => {
     return (dispatch) => {
-        axios.get(`/api/authors.json`).then((resp) => {
-            dispatch(loadAuthorAction(resp.data.data));
+        axios.get('http://localhost:8000/users').then((resp) => {
+            dispatch(loadAuthorAction(resp.data));
         }).catch(() => {
-            console.log('author api error');
+            console.log('获取推荐用户 api error');
         });
 
     }
