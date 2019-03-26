@@ -90,7 +90,6 @@ class Header extends Component{
                     <Link to='/'><NavItem className='left active'>首页</NavItem></Link>
                     <NavItem className='left' onClick={this.notImplemented}>下载App</NavItem>
                     <NavItem className='right' onClick={this.toggleLogin.bind(this)}>{this.userState()}</NavItem>
-                    <NavItem className='right'><i className='iconfont'>&#xe636;</i></NavItem>
                     <SearchWrapper>
                         <CSSTransition
                             in={focused}
