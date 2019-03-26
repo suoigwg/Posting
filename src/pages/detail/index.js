@@ -1,14 +1,16 @@
 import React, {Component} from 'react';
-import {DetailWrapper, Header, Content} from "./style";
-import {actionCreators} from "../detail/store";
+import {Content, DetailWrapper, Header} from "./style";
+import {actionCreators} from "./store/index";
 import {connect} from "react-redux";
 
 class Detail extends Component {
     render() {
         const {title, content} = this.props;
+        const timestamp = new Date(parseInt(this.props.timestamp, 10));
         return (
             <DetailWrapper>
                 <Header>{title}</Header>
+                <p>发表于{timestamp.getFullYear() + '-' + timestamp.getMonth() + '-' + timestamp.getDay()}</p>
                 <Content dangerouslySetInnerHTML={{__html: content}}></Content>
             </DetailWrapper>
         )
@@ -24,6 +26,7 @@ const mapStateToProps = (state /*, ownProps*/) => {
     return {
         title: state.getIn(['detail', 'title']),
         content: state.getIn(['detail', 'content']),
+        timestamp: state.getIn(['detail', 'timestamp']),
     }
 };
 
