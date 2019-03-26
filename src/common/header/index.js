@@ -1,25 +1,26 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {
+    Addition,
+    Button,
     HeaderWrapper,
     Logo,
     Nav,
     NavItem,
     NavSearch,
-    Addition,
-    Button,
-    SearchWrapper,
     SearchInfo,
-    SearchInfoTitle,
-    SearchInfoSwitch,
     SearchInfoItem,
-    SearchInfoList
+    SearchInfoList,
+    SearchInfoSwitch,
+    SearchInfoTitle,
+    SearchWrapper
 } from "./style";
 import {CSSTransition} from 'react-transition-group'
 import * as actionCreators from './store/actionCreaters'
 import {constants} from "./store";
 import * as loginActionCreators from '../../pages/login/store/actionCreators'
 import {Link} from "react-router-dom";
+import {Avatar} from "antd";
 
 class Header extends Component{
 
@@ -57,6 +58,19 @@ class Header extends Component{
         }
     }
 
+    userState() {
+        const {login} = this.props;
+        if (login) {
+            return (
+                <Link to={'/user/1'}>
+                    <Avatar size={40} icon="user"/>
+                </Link>
+            )
+        } else {
+            return <span>登录</span>
+        }
+    }
+
     render() {
         const {hideHeader, focused, list, searchBarFocused, searchBarBlur, login} = this.props;
         if (hideHeader) return '';
@@ -66,7 +80,7 @@ class Header extends Component{
                 <Nav>
                     <Link to='/'><NavItem className='left active'>首页</NavItem></Link>
                     <NavItem className='left'>下载App</NavItem>
-                    <NavItem className='right' onClick={this.toggleLogin.bind(this)}>{login ? '退出' : '登录'}</NavItem>
+                    <NavItem className='right' onClick={this.toggleLogin.bind(this)}>{this.userState()}</NavItem>
                     <NavItem className='right'><i className='iconfont'>&#xe636;</i></NavItem>
                     <SearchWrapper>
                         <CSSTransition
@@ -89,7 +103,7 @@ class Header extends Component{
                         <Link to={'/compose'}>
                             <Button className='reg'><i className='iconfont'>&#xe615;</i>写文章</Button>
                         </Link>
-                        <Button className='writing'>注册</Button>
+                        {!login ? <Button className='writing'>注册</Button> : ''}
                     </Addition>
                 </Nav>
             </HeaderWrapper>
