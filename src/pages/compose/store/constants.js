@@ -1,0 +1,2 @@
+export const CHANGE_CONTENT = 'CREATE_ARTICLE';
+export const CHANGE_TITLE = 'CHANGE_TITLE';

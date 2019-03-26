@@ -1,11 +1,13 @@
 import 'braft-editor/dist/index.css'
 import React from 'react'
 import BraftEditor from 'braft-editor'
+import {connect} from "react-redux";
+import * as actionCreators from '../store/actionCreators'
 
-export default class BasicDemo extends React.Component {
+class Editor extends React.Component {
 
     state = {
-        editorState: BraftEditor.createEditorState('<p>Hello <b>World!</b></p>'), // 设置编辑器初始内容
+        editorState: BraftEditor.createEditorState(''), // 设置编辑器初始内容
         outputHTML: '<p></p>'
     };
 
@@ -23,12 +25,13 @@ export default class BasicDemo extends React.Component {
         this.setState({
             editorState: editorState,
             outputHTML: editorState.toHTML()
-        })
+        });
+        this.props.syncContent(editorState.toHTML());
     };
 
     setEditorContentAsync = () => {
         this.isLivinig && this.setState({
-            editorState: BraftEditor.createEditorState('<p>你好，<b>世界!</b><p>')
+            editorState: BraftEditor.createEditorState('')
         })
     };
 
@@ -42,7 +45,7 @@ export default class BasicDemo extends React.Component {
 
     render() {
 
-        const {editorState, outputHTML} = this.state
+        const {editorState, outputHTML} = this.state;
 
         return (
             <div>
@@ -60,3 +63,19 @@ export default class BasicDemo extends React.Component {
     }
 
 }
+
+
+const mapStateToProps = (state /*, ownProps*/) => {
+    return {};
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        syncContent(content) {
+            dispatch(actionCreators.changeContent(content));
+        }
+    };
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Editor);

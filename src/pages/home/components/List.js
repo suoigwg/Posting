@@ -2,6 +2,7 @@ import React, {Component, Fragment} from 'react';
 import {connect} from "react-redux";
 import {ListInfo, ListItem} from "../style"
 import {Link} from "react-router-dom";
+import htmlConverter from 'html-to-text';
 
 class List extends Component {
     render() {
@@ -15,7 +16,7 @@ class List extends Component {
                                 <img alt='' className='pic' src={''}/>
                                 <ListInfo>
                                     <p>{item.title}</p>
-                                    <p className='brief'>{item.content}</p>
+                                    <p className='brief'>{htmlConverter.fromString(item.content).slice(0, 100)}</p>
                                 </ListInfo>
                             </ListItem>
                         </Link>
