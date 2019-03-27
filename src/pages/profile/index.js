@@ -6,10 +6,8 @@ import './style.scss';
 import {Avatar, Button, Col, Icon, List, Menu, message, Modal, Row, Statistic, Timeline, Typography} from 'antd';
 import axios from "axios";
 
-const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
 
-const {Title, Paragraph, Text} = Typography;
+const {Title} = Typography;
 
 const error = (msg) => {
     message.error(msg);
@@ -104,12 +102,13 @@ class Profile extends Component {
                     .then(() => this.props.changeRelation('已关注'))
                     .catch(() => error('关注失败'));
                 break;
+            default:
         }
     }
 
     followBtn() {
         const currentPageUser = parseInt(this.props.match.params.id, 10);
-        const {userid, followingList} = this.props;
+        const {userid} = this.props;
         if (userid === currentPageUser) return '';
         return (
             <Button size={'small'} onClick={this.followHandler}>{this.props.relation}</Button>

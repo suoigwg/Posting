@@ -22,3 +22,8 @@ export const Content = styled.div`
     width: 100%;
   }
 `;
+
+export const LikeBtn = styled.div`
+  width: 100px;
+  margin: 10px auto;
+`;

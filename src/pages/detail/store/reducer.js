@@ -5,6 +5,7 @@ const defaultState = fromJS({
     title: fromJS(''),
     content: fromJS(''),
     timestamp: 0,
+    liked: false
 });
 
 export default (state = defaultState, action) => {
@@ -15,6 +16,10 @@ export default (state = defaultState, action) => {
                 content: action.content,
                 timestamp: action.timestamp
             });
+        case constants.CHECK_LIKE:
+            return state.set('like', action.like);
+        case constants.CHANGE_LIKE:
+            return state.set('like', action.like);
         default:
             return state;
     }

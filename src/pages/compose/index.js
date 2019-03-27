@@ -42,9 +42,9 @@ class Composer extends Component {
             confirmLoading: true,
         });
 
-        const {title, content} = this.props;
+        const {title, content, author} = this.props;
         axios.post("http://localhost:8000/article/new", {
-            title, content
+            title, content, author
         }).then(() => {
             this.setState({
                 visible: false,
@@ -104,6 +104,7 @@ const mapStateToProps = (state /*, ownProps*/) => {
     return {
         title: state.getIn(['composer', 'title']),
         content: state.getIn(['composer', 'content']),
+        author: state.getIn(['login', 'userid'])
     };
 };
 

@@ -14,10 +14,30 @@ const loadArticleAction = (data) => {
 
 export const loadArticle = (id) => {
     return (dispatch) => {
-        axios.get('http://localhost:8000/article/' + id).then((resp) => {
+        axios.get(process.env.REACT_APP_API_ROOT + 'article/' + id).then((resp) => {
             dispatch(loadArticleAction(resp.data))
         }).catch((err) => {
             console.log('获取文章API失败')
         });
+    }
+};
+
+export const checkIfUserLike = (user, article) => {
+    return (dispatch) => {
+        axios.post(process.env.REACT_APP_API_ROOT + 'checklike', {user, article}).then((resp) => {
+            dispatch({
+                type: constants.CHECK_LIKE,
+                like: resp.data.like
+            })
+        }).catch((err) => {
+            console.log('获取点赞信息失败');
+        });
+    }
+}
+
+export const changeLike = (like) => {
+    return {
+        type: constants.CHANGE_LIKE,
+        like
     }
 };
