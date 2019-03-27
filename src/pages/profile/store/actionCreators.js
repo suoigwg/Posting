@@ -55,3 +55,25 @@ export const loadPublishActivity = (userid) => {
         }).catch(() => console.log("无法加载用户活动列表"));
     }
 };
+
+export const loadFollowingUser = (userid) => {
+    return (dispatch) => {
+        axios.get('/api/following.json').then((resp) => {
+            dispatch({
+                type: constants.LOAD_FOLLOWING,
+                data: resp.data,
+            });
+        }).catch(() => console.log("无法加载关注用户列表"));
+    }
+};
+
+export const loadFollowerUser = (userid) => {
+    return (dispatch) => {
+        axios.get('/api/following.json').then((resp) => {
+            dispatch({
+                type: constants.LOAD_FOLLOWER,
+                data: resp.data,
+            });
+        }).catch(() => console.log("无法加载粉丝列表"));
+    }
+};

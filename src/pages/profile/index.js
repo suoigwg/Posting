@@ -3,7 +3,7 @@ import * as actionCreators from "./store/actionCreators";
 import {connect} from "react-redux";
 import 'antd/dist/antd.css';
 import './style.scss';
-import {Avatar, Col, Icon, Menu, Row, Statistic, Timeline, Typography} from 'antd';
+import {Avatar, Col, Icon, List, Menu, Modal, Row, Statistic, Timeline, Typography} from 'antd';
 
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
@@ -40,6 +40,52 @@ class Profile extends Component {
         }
     };
 
+    info(title) {
+        const {followingList, followerList} = this.props;
+        let content = {};
+        switch (title) {
+            case "Ta关注的用户":
+                content = followerList.map((item) => {
+                    return (
+                        <List.Item key={item.id}>
+                            <List.Item.Meta
+                                avatar={<Avatar
+                                    src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>}
+                                title={<a href="https://ant.design">{item.username}</a>}
+                                description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                            />
+                        </List.Item>
+                    )
+                });
+                break;
+            case "关注Ta的人":
+                content = followingList.map((item) => {
+                    return (
+                        <List.Item key={item.id}>
+                            <List.Item.Meta
+                                avatar={<Avatar
+                                    src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>}
+                                title={<a href="https://ant.design">{item.username}</a>}
+                                description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                            />
+                        </List.Item>
+                    )
+                });
+                break;
+            default:
+                break;
+        }
+        Modal.info({
+            title,
+            content,
+            onOk() {
+            },
+            width: 600,
+            okText: '关闭'
+        });
+    }
+
+
     render() {
         const {timeline, username, following, wordCount, articleCount, avatarUrl, follower} = this.props;
         return (
@@ -51,10 +97,10 @@ class Profile extends Component {
                     <div className={'profile-userinfo'}>
                         <Title>@{username}</Title>
                         <Row className={'statistic-row'} justify={'space-around'} type={'flex'} gutter={8}>
-                            <Col span={6}>
+                            <Col span={6} onClick={() => this.info("Ta关注的用户")}>
                                 <Statistic title="关注" value={following}/>
                             </Col>
-                            <Col span={6}>
+                            <Col span={6} onClick={() => this.info("关注Ta的人")}>
                                 <Statistic title="粉丝" value={follower}/>
                             </Col>
                             <Col span={6}>
@@ -100,7 +146,10 @@ class Profile extends Component {
     }
 
     componentDidMount() {
-        this.props.loadProfile(this.props.match.params.id);
+        const userID = this.props.match.params.id;
+        this.props.loadProfile(userID);
+        this.props.loadFollowingUser(userID);
+        this.props.loadFollowerUser(userID);
     }
 
 }
@@ -115,6 +164,8 @@ const mapStateToProps = (state /*, ownProps*/) => {
         avatarUrl: state.getIn(['profile', 'avatarUrl']),
         follower: state.getIn(['profile', 'follower']),
         timeline: state.getIn(['profile', 'timeline']),
+        followingList: state.getIn(['profile', 'followingList']),
+        followerList: state.getIn(['profile', 'followerList']),
     };
 };
 
@@ -128,6 +179,12 @@ const mapDispatchToProps = (dispatch) => {
         },
         loadUpdate(id) {
             dispatch(actionCreators.loadPublishActivity(id));
+        },
+        loadFollowingUser(id) {
+            dispatch(actionCreators.loadFollowingUser(id));
+        },
+        loadFollowerUser(id) {
+            dispatch(actionCreators.loadFollowerUser(id));
         }
     };
 };

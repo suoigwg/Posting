@@ -8,7 +8,9 @@ const defaultState = fromJS({
     wordCount: 199,
     articleCount: 1,
     avatarUrl: "https://upload.jianshu.io/users/upload_avatars/12986775/99342bcc-e386-4e47-b57d-983b0664d04f?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240",
-    timeline: []
+    timeline: [],
+    followingList: [],
+    followerList: []
 });
 
 export default (state = defaultState, action) => {
@@ -18,6 +20,10 @@ export default (state = defaultState, action) => {
             return state.merge(action.data);
         case constants.LOAD_USER_TIMELINE:
             return state.set('timeline', action.timeline);
+        case constants.LOAD_FOLLOWER:
+            return state.set("followerList", action.data);
+        case constants.LOAD_FOLLOWING:
+            return state.set("followingList", action.data);
         default:
             return state;
     }

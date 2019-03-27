@@ -28,7 +28,7 @@ class Writer extends Component {
                     }
 
                 </WriterList>
-                <LoadMoreAuthor>查看全部</LoadMoreAuthor>
+                <LoadMoreAuthor><Link to={'/userlist'}>查看全部</Link></LoadMoreAuthor>
             </WriterWrapper>
         )
     }
