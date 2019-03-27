@@ -72,7 +72,7 @@ class Header extends Component{
                 </Link>
             )
         } else {
-            return <span>登录</span>
+            return <Link to={'/login'}>登录</Link>
         }
     }
 
@@ -130,7 +130,6 @@ class Header extends Component{
         if (this.props.login) {
             this.props.logout();
         } else {
-            window.location = '/login';
         }
     }
 
