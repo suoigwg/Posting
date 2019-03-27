@@ -16,7 +16,6 @@ class Writer extends Component {
                                 <WriterListItem key={item.id}>
                                     <Avatar size={64} icon={'user'}/>
                                     <div style={{padding: '10px 0 0 15px'}}>
-                                        <a className='follow'>+关注</a>
                                         <Link to={'/user/' + item.id}>
                                             <span className='name'>{item.username}</span>
                                         </Link>
