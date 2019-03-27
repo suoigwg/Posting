@@ -5,6 +5,7 @@ import detailReducer from "../pages/detail/store/reducer"
 import loginReducer from "../pages/login/store/reducer";
 import composerReducer from "../pages/compose/store/reducer";
 import profileReducer from "../pages/profile/store/reducer";
+import userReducer from "../pages/user/store/reducer"
 
 export const reducer =  combineReducers({
     header: headerReducer,
@@ -12,5 +13,6 @@ export const reducer =  combineReducers({
     detail: detailReducer,
     login: loginReducer,
     composer: composerReducer,
-    profile: profileReducer
+    profile: profileReducer,
+    user: userReducer
 });
