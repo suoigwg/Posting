@@ -13,12 +13,12 @@ class Writer extends Component {
                     {
                         this.props.authors.map((item, idx) => {
                             return (
-                                <WriterListItem>
+                                <WriterListItem key={item.id}>
                                     <Avatar size={64} icon={'user'}/>
                                     <div style={{padding: '10px 0 0 15px'}}>
                                         <a className='follow'>+关注</a>
                                         <Link to={'/user/' + item.id}>
-                                            <a className='name'>{item.username}</a>
+                                            <span className='name'>{item.username}</span>
                                         </Link>
                                     </div>
                                     <p></p>

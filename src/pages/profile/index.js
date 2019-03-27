@@ -3,17 +3,24 @@ import * as actionCreators from "./store/actionCreators";
 import {connect} from "react-redux";
 import 'antd/dist/antd.css';
 import './style.scss';
-import {Avatar, Col, Icon, List, Menu, Modal, Row, Statistic, Timeline, Typography} from 'antd';
+import {Avatar, Button, Col, Icon, List, Menu, message, Modal, Row, Statistic, Timeline, Typography} from 'antd';
+import axios from "axios";
 
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
 const {Title, Paragraph, Text} = Typography;
 
+const error = (msg) => {
+    message.error(msg);
+};
+
 class Profile extends Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
+        this.followBtn = this.followBtn.bind(this);
+        this.followHandler = this.followHandler.bind(this);
     }
 
     state = {
@@ -45,28 +52,24 @@ class Profile extends Component {
         let content = {};
         switch (title) {
             case "Ta关注的用户":
-                content = followerList.map((item) => {
+                content = followingList.map((item) => {
                     return (
                         <List.Item key={item.id}>
                             <List.Item.Meta
-                                avatar={<Avatar
-                                    src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>}
-                                title={<a href="https://ant.design">{item.username}</a>}
-                                description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                                avatar={<Avatar icon={'user'}></Avatar>}
+                                title={item.username}
                             />
                         </List.Item>
                     )
                 });
                 break;
             case "关注Ta的人":
-                content = followingList.map((item) => {
+                content = followerList.map((item) => {
                     return (
                         <List.Item key={item.id}>
                             <List.Item.Meta
-                                avatar={<Avatar
-                                    src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>}
-                                title={<a href="https://ant.design">{item.username}</a>}
-                                description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                                avatar={<Avatar icon={'user'}></Avatar>}
+                                title={item.username}
                             />
                         </List.Item>
                     )
@@ -85,6 +88,34 @@ class Profile extends Component {
         });
     }
 
+    followHandler() {
+        const currentPageUser = parseInt(this.props.match.params.id, 10);
+        const {userid} = this.props;
+        switch (this.props.relation) {
+            case "已关注":
+                axios.post(process.env.REACT_APP_API_ROOT + "unfollow",
+                    {follower: userid, following: currentPageUser})
+                    .then(() => this.props.changeRelation('未关注'))
+                    .catch(() => error('取消关注失败'));
+                break;
+            case "未关注":
+                axios.post(process.env.REACT_APP_API_ROOT + "follow",
+                    {follower: userid, following: currentPageUser})
+                    .then(() => this.props.changeRelation('已关注'))
+                    .catch(() => error('关注失败'));
+                break;
+        }
+    }
+
+    followBtn() {
+        const currentPageUser = parseInt(this.props.match.params.id, 10);
+        const {userid, followingList} = this.props;
+        if (userid === currentPageUser) return '';
+        return (
+            <Button size={'small'} onClick={this.followHandler}>{this.props.relation}</Button>
+        )
+
+    }
 
     render() {
         const {timeline, username, following, wordCount, articleCount, avatarUrl, follower} = this.props;
@@ -96,6 +127,7 @@ class Profile extends Component {
                     </div>
                     <div className={'profile-userinfo'}>
                         <Title>@{username}</Title>
+                        {this.followBtn()}
                         <Row className={'statistic-row'} justify={'space-around'} type={'flex'} gutter={8}>
                             <Col span={6} onClick={() => this.info("Ta关注的用户")}>
                                 <Statistic title="关注" value={following}/>
@@ -133,10 +165,12 @@ class Profile extends Component {
                         <Timeline>
                             {timeline.map((item, idx) => {
                                 const time = new Date(parseInt(item.timestamp, 10));
-                                return <Timeline.Item>
+                                return (
+                                    <Timeline.Item key={item.id}>
                                     <p>于{time.toString()}{this.state.action}了新文章《{item.title}》</p>
                                     <p>{item.content}</p>
                                 </Timeline.Item>
+                                )
                             })}
                         </Timeline>
                     </div>
@@ -149,7 +183,7 @@ class Profile extends Component {
         const userID = this.props.match.params.id;
         this.props.loadProfile(userID);
         this.props.loadFollowingUser(userID);
-        this.props.loadFollowerUser(userID);
+        this.props.loadFollowerUser(userID, this.props.userid);
     }
 
 }
@@ -166,6 +200,8 @@ const mapStateToProps = (state /*, ownProps*/) => {
         timeline: state.getIn(['profile', 'timeline']),
         followingList: state.getIn(['profile', 'followingList']),
         followerList: state.getIn(['profile', 'followerList']),
+        userid: state.getIn(['login', 'userid']),
+        relation: state.getIn(['profile', 'relation'])
     };
 };
 
@@ -183,8 +219,11 @@ const mapDispatchToProps = (dispatch) => {
         loadFollowingUser(id) {
             dispatch(actionCreators.loadFollowingUser(id));
         },
-        loadFollowerUser(id) {
-            dispatch(actionCreators.loadFollowerUser(id));
+        loadFollowerUser(id, currentUser) {
+            dispatch(actionCreators.loadFollowerUser(id, currentUser));
+        },
+        changeRelation(newRelation) {
+            dispatch(actionCreators.changeFollowRelation(newRelation));
         }
     };
 };

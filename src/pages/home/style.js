@@ -166,7 +166,7 @@ export const WriterListItem = styled.li`
 
 `;
 
-export const LoadMoreAuthor = styled.a`
+export const LoadMoreAuthor = styled.span`
     padding: 7px 0;
     width: 98%;
     font-size: 13px;

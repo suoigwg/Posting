@@ -2,7 +2,6 @@ import axios from 'axios';
 import * as constants from './constants'
 
 const loadProfileAction = (data) => {
-    console.log(data);
     const {timeline, username, following, wordCount, articleCount, avatarUrl, follower} = data;
     return {
         type: constants.LOAD_USER_PROFILE,
@@ -58,7 +57,7 @@ export const loadPublishActivity = (userid) => {
 
 export const loadFollowingUser = (userid) => {
     return (dispatch) => {
-        axios.get('/api/following.json').then((resp) => {
+        axios.get(process.env.REACT_APP_API_ROOT + 'following/' + userid).then((resp) => {
             dispatch({
                 type: constants.LOAD_FOLLOWING,
                 data: resp.data,
@@ -67,13 +66,21 @@ export const loadFollowingUser = (userid) => {
     }
 };
 
-export const loadFollowerUser = (userid) => {
+export const loadFollowerUser = (userid, currentUser) => {
     return (dispatch) => {
-        axios.get('/api/following.json').then((resp) => {
+        axios.get(process.env.REACT_APP_API_ROOT + 'follower/' + userid).then((resp) => {
             dispatch({
                 type: constants.LOAD_FOLLOWER,
                 data: resp.data,
+                currentUser
             });
         }).catch(() => console.log("无法加载粉丝列表"));
+    }
+};
+
+export const changeFollowRelation = (relation) => {
+    return {
+        type: constants.CHANGE_RELATION,
+        relation
     }
 };

@@ -13,7 +13,6 @@ const defaultState = fromJS({
 export default (state = defaultState, action) => {
     switch (action.type) {
         case constants.INIT_HOME_DATA_ACTION:
-            console.log(action.articleList);
             return state.merge({
                 articleList: action.articleList
             });

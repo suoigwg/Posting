@@ -36,7 +36,6 @@ export const changeTopBtnAction = (visibility) => {
 export const getHomeJson = () => {
     return (dispatch) => {
         axios.get('http://localhost:8000/article/list').then((resp) => {
-            console.log(resp.data);
             dispatch(initHomeDataAction(resp.data));
         }).catch(() => {
             console.log('获取主页文章失败');
