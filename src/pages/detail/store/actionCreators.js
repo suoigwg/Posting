@@ -3,19 +3,20 @@ import * as constants from './constants'
 
 
 const loadArticleAction = (data) => {
-    const {title, content, timestamp} = data;
+    const {title, content, timestamp, date} = data;
     return {
         type: constants.LOAD_ARTICLE_DATA,
         title,
         content,
         timestamp,
+        date
     }
 };
 
 export const loadArticle = (id) => {
     return (dispatch) => {
         axios.get(process.env.REACT_APP_API_ROOT + 'article/' + id).then((resp) => {
-            dispatch(loadArticleAction(resp.data))
+            dispatch(loadArticleAction(resp.data[0]))
         }).catch((err) => {
             console.log('获取文章API失败')
         });

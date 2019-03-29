@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {Button, CenterDiv, Input, Label, LabelWrapper, LoginBox, LoginForm, LoginWrapper, LogoWrapper} from "./style";
+import {Button, CenterDiv, Input, Label, LabelWrapper, LoginBox, LoginForm, LoginWrapper} from "./style";
 import * as actionCreators from "./store/actionCreators";
 import {connect} from "react-redux";
 import {Redirect} from "react-router-dom";
-import logoImg from '../../statics/imgs/logo_big.png'
+import {message} from "antd";
 
 class Login extends Component {
     constructor(props) {
@@ -15,15 +15,12 @@ class Login extends Component {
         if (!this.props.loginState) {
             return (
                 <LoginWrapper>
-                    <LogoWrapper>
-                        <a href={'/'}><img src={logoImg}/></a>
-                    </LogoWrapper>
                     <LoginBox>
                         <LabelWrapper>
                             <div>
                                 <Label>登录</Label>
                                 <b>·</b>
-                                <Label>注册</Label>
+                                <Label onClick={() => message.warn("此功能未开放")}>注册</Label>
                             </div>
                         </LabelWrapper>
                         <CenterDiv>

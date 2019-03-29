@@ -88,8 +88,6 @@ class Composer extends Component {
                         >
                             <p>{ModalText}</p>
                         </Modal>
-                        <Button type="danger" style={{marginLeft: "10px"}}>放弃更改</Button>
-
                     </div>
                     <Editor/>
                 </EditorWrapper>

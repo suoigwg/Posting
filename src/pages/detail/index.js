@@ -15,13 +15,13 @@ class Detail extends Component {
 
 
     render() {
-        const {title, content, like} = this.props;
+        const {title, content, like, date} = this.props;
         const timestamp = new Date(parseInt(this.props.timestamp, 10));
         return (
             <DetailWrapper>
                 <Title level={1}>{title}</Title>
                 <Text
-                    type="secondary">发表于{timestamp.getFullYear() + '-' + timestamp.getMonth() + '-' + timestamp.getDay()}</Text>
+                    type="secondary">发表于{date}</Text>
                 <Content dangerouslySetInnerHTML={{__html: content}}></Content>
                 <LikeBtn>
                     <Button shape="round" icon="like" size={'large'}
@@ -58,6 +58,7 @@ const mapStateToProps = (state /*, ownProps*/) => {
         content: state.getIn(['detail', 'content']),
         timestamp: state.getIn(['detail', 'timestamp']),
         like: state.getIn(['detail', 'like']),
+        date: state.getIn(['detail', 'date']),
         userid: state.getIn(['login', 'userid']),
     }
 };

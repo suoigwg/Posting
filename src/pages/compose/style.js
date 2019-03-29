@@ -1,11 +1,9 @@
 import styled from 'styled-components';
 
 export const ComposerWrapper = styled.div`
-    height: 100%;  
-    width: 100%;  
-    position: absolute;  
-    top: 60px;  
-    bottom: 0px;  
+    margin: 5px auto;
+    max-width: 960px; 
+    border: 1px solid grey;
     display: flex;
 `;
 
@@ -17,7 +15,7 @@ export const EditorWrapper = styled.div`
 export const EditorTitle = styled.input.attrs(
     {placeholder: '请输入标题'}
 )`
-    width: 960px;
+    width: 640px;
     padding: 0 80px 10px 40px;
     margin-bottom: 0;
     border: none;

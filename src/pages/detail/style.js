@@ -17,11 +17,13 @@ export const Header = styled.div`
 `;
 
 export const Content = styled.div`
+  
   color: #2f2f2f;
   img{
     width: 100%;
   }
   font-size: 20px;
+  margin-top: 10px;
 `;
 
 export const LikeBtn = styled.div`

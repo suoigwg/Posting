@@ -5,7 +5,8 @@ const defaultState = fromJS({
     title: fromJS(''),
     content: fromJS(''),
     timestamp: 0,
-    liked: false
+    liked: false,
+    date: ''
 });
 
 export default (state = defaultState, action) => {
@@ -14,7 +15,8 @@ export default (state = defaultState, action) => {
             return state.merge({
                 title: action.title,
                 content: action.content,
-                timestamp: action.timestamp
+                timestamp: action.timestamp,
+                date: action.date
             });
         case constants.CHECK_LIKE:
             return state.set('like', action.like);

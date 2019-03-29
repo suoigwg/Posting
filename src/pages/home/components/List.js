@@ -2,7 +2,6 @@ import React, {Component, Fragment} from 'react';
 import {connect} from "react-redux";
 import {ListInfo, ListItem} from "../style"
 import {Link} from "react-router-dom";
-import htmlConverter from 'html-to-text';
 import {Typography} from "antd";
 
 const {Title, Text} = Typography;
@@ -20,7 +19,7 @@ class List extends Component {
                                 <ListInfo>
                                     <Title level={2}>{item.title}</Title>
                                     <Text
-                                        className='brief'>{htmlConverter.fromString(item.content).slice(0, 100)}</Text>
+                                        className='brief'>{item.summary}</Text>
                                 </ListInfo>
                             </ListItem>
                         </Link>

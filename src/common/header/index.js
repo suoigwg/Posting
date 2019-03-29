@@ -1,19 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import {
-    Addition,
-    HeaderWrapper,
-    MyButton,
-    Nav,
-    NavItem,
-    SearchInfo,
-    SearchInfoItem,
-    SearchInfoList,
-    SearchInfoSwitch,
-    SearchInfoTitle
-} from "./style";
+import {Addition, HeaderWrapper, MyButton, Nav, NavItem} from "./style";
 import * as actionCreators from './store/actionCreaters'
-import {constants} from "./store";
 import {Link} from "react-router-dom";
 import {AutoComplete, Avatar, Button, Icon, Input, message} from "antd";
 import Axios from "axios";
@@ -30,6 +18,7 @@ function onSelect(value) {
     console.log('onSelect', value);
 }
 
+const hideHeaderUrl = ['/compose', '/login'];
 
 function renderOption(item) {
     return (
@@ -96,40 +85,6 @@ class Header extends Component{
                 </AutoComplete>
             </div>
         );
-    }
-
-    showHotTopic(){
-        const {focused, list, hotTopicMouseIn, hotTopicMouseOut, mouseIn, totalPage, currentPage, switchPage} = this.props
-        if (focused || mouseIn) {
-            const newList = list.toJS();
-            let searchInfoList = [];
-
-            for (let i = currentPage * constants.TOPICS_PER_PAGE; i < (currentPage + 1) * constants.TOPICS_PER_PAGE; i++) {
-                if (newList[i])
-                    searchInfoList.push(<SearchInfoItem key={newList[i]}>{newList[i]}</SearchInfoItem>)
-            }
-
-            return (
-                <SearchInfo
-                    onMouseEnter={hotTopicMouseIn}
-                    onMouseLeave={hotTopicMouseOut}
-                >
-                    <SearchInfoTitle>热门搜索
-                        <SearchInfoSwitch onClick={() => switchPage(currentPage, totalPage, this.spinIcon)}>
-                            <i ref={(icon) => {
-                                this.spinIcon = icon
-                            }} className='iconfont spin'>&#xe851;</i>
-                            换一批
-                        </SearchInfoSwitch>
-                    </SearchInfoTitle>
-                    <div>
-                        <SearchInfoList>
-                            {searchInfoList}
-                        </SearchInfoList>
-                    </div>
-                </SearchInfo>
-            )
-        }
     }
 
     userState() {
