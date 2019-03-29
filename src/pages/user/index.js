@@ -7,9 +7,6 @@ import {Avatar, List} from 'antd';
 import {Link} from "react-router-dom";
 
 class UserList extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         const {users} = this.props;

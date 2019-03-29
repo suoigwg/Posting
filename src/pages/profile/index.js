@@ -5,13 +5,9 @@ import 'antd/dist/antd.css';
 import './style.scss';
 import {Avatar, Button, Col, Icon, List, Menu, message, Modal, Row, Statistic, Timeline, Typography} from 'antd';
 import axios from "axios";
-
+import {Link} from "react-router-dom";
 
 const {Title} = Typography;
-
-const error = (msg) => {
-    message.error(msg);
-};
 
 class Profile extends Component {
     constructor(props) {
@@ -89,18 +85,23 @@ class Profile extends Component {
     followHandler() {
         const currentPageUser = parseInt(this.props.match.params.id, 10);
         const {userid} = this.props;
+        if (!userid || !currentPageUser) {
+            message.error("请确认您是否登录");
+            return;
+        }
+        ;
         switch (this.props.relation) {
             case "已关注":
                 axios.post(process.env.REACT_APP_API_ROOT + "unfollow",
                     {follower: userid, following: currentPageUser})
                     .then(() => this.props.changeRelation('未关注'))
-                    .catch(() => error('取消关注失败'));
+                    .catch(() => message.error("取消关注失败,请检查网络状况"));
                 break;
             case "未关注":
                 axios.post(process.env.REACT_APP_API_ROOT + "follow",
                     {follower: userid, following: currentPageUser})
                     .then(() => this.props.changeRelation('已关注'))
-                    .catch(() => error('关注失败'));
+                    .catch(() => message.error("关注失败,请检查网络状况"));
                 break;
             default:
         }
@@ -152,10 +153,10 @@ class Profile extends Component {
                             className={'profile-menu'}
                         >
                             <Menu.Item key="publish">
-                                <Icon type="mail"/>文章
+                                <Icon type="file"/>文章
                             </Menu.Item>
                             <Menu.Item key="update">
-                                <Icon type="mail"/>动态
+                                <Icon type="heart"/>点赞
                             </Menu.Item>
 
                         </Menu>
@@ -163,11 +164,11 @@ class Profile extends Component {
                     <div className={'menu-timeline'}>
                         <Timeline>
                             {timeline.map((item, idx) => {
-                                const time = new Date(parseInt(item.timestamp, 10));
                                 return (
                                     <Timeline.Item key={item.id}>
-                                    <p>于{time.toString()}{this.state.action}了新文章《{item.title}》</p>
-                                    <p>{item.content}</p>
+                                        <h5 style={{fontSize: '20px'}}>于{item.date}{this.state.action}了新文章<Link
+                                            to={'/detail/' + item.id}>《{item.title}》</Link></h5>
+                                        <p style={{fontSize: '15px'}}>{item.summary}</p>
                                 </Timeline.Item>
                                 )
                             })}

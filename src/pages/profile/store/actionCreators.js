@@ -28,9 +28,9 @@ const loadActivityAction = (timeline) => {
 
 export const loadUserProfile = (userid) => {
     return (dispatch) => {
-        axios.get('http://localhost:8000/user/' + userid).then((resp) => {
+        axios.get(process.env.REACT_APP_API_ROOT + 'user/' + userid).then((resp) => {
             const userdata = resp.data;
-            axios.get('http://localhost:8000/publish/' + userid).then((resp) => {
+            axios.get(process.env.REACT_APP_API_ROOT + 'publish/' + userid).then((resp) => {
                 userdata['timeline'] = resp.data;
                 dispatch(loadProfileAction(userdata))
             })

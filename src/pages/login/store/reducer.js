@@ -5,7 +5,7 @@ const defaultState = fromJS({
     login: false,
     user: [],
     hideHeader: false,
-    userid: 1,
+    userid: undefined,
 });
 
 export default (state = defaultState, action) => {

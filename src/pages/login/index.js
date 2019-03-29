@@ -25,7 +25,7 @@ class Login extends Component {
                         </LabelWrapper>
                         <CenterDiv>
                             <LoginForm onSubmit={this.handleSubmit} id={'loginForm'} method={'POST'}
-                                       action={'http://localhost:8000/login'}>
+                                       action={process.env.REACT_APP_API_ROOT + 'login'}>
                                 <Input name={'username'} placeholder='手机号或邮箱'/>
                                 <Input name={'password'} placeholder='密码' type='password'/>
                             </LoginForm>

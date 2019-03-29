@@ -7,18 +7,12 @@ import {AutoComplete, Avatar, Button, Icon, Input, message} from "antd";
 import Axios from "axios";
 import "./style.scss"
 
-message.config({
-    duration: 1,
-    maxCount: 2,
-});
 
 const Option = AutoComplete.Option;
 
 function onSelect(value) {
     console.log('onSelect', value);
 }
-
-const hideHeaderUrl = ['/compose', '/login'];
 
 function renderOption(item) {
     return (
@@ -105,7 +99,7 @@ class Header extends Component{
     }
 
     render() {
-        const {hideHeader, focused, list, searchBarFocused, searchBarBlur, login} = this.props;
+        const {hideHeader, login} = this.props;
         if (hideHeader) return '';
         return(
             <HeaderWrapper>

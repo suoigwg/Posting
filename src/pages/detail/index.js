@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import {Button, message, Typography} from "antd";
 import Axios from "axios";
 
-const {Title, Text, Paragraph} = Typography;
+const {Title, Text} = Typography;
 
 class Detail extends Component {
     constructor(props) {
@@ -16,7 +16,6 @@ class Detail extends Component {
 
     render() {
         const {title, content, like, date} = this.props;
-        const timestamp = new Date(parseInt(this.props.timestamp, 10));
         return (
             <DetailWrapper>
                 <Title level={1}>{title}</Title>
@@ -34,15 +33,18 @@ class Detail extends Component {
     toggleLike() {
         const article = parseInt(this.props.match.params.id, 10);
         const {userid, like} = this.props;
-        if (!userid) return;
+        if (!userid) {
+            message.error("操作失败,请确认您是否登录");
+            return;
+        }
         const action = !like ? 'like' : 'unlike';
         Axios.post(process.env.REACT_APP_API_ROOT + 'like', {
             user: userid,
             article,
             action
-        }).then(() => this.props.changeLike(!like))
+        }, {withCredentials: true}).then(() => this.props.changeLike(!like))
             .catch(() => {
-                message.error("操作失败")
+                message.error("操作失败,请确认您的网络连接")
             })
     }
 

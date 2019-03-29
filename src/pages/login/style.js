@@ -1,4 +1,4 @@
-import styled, {injectGlobal} from 'styled-components';
+import styled from 'styled-components';
 import LogoPic from '../../statics/imgs/logo_big.png';
 
 

@@ -9,7 +9,12 @@ import Login from './pages/login/index'
 import Composer from './pages/compose/index'
 import Profile from './pages/profile/index'
 import UserList from './pages/user/index'
+import {message} from "antd";
 
+message.config({
+    duration: 1,
+    maxCount: 2,
+});
 
 class App extends Component{
     render() {
@@ -17,8 +22,8 @@ class App extends Component{
             <Provider store={store}>
                 <BrowserRouter>
                     <div>
+                        <Header/>
                         <div>
-                            <Header/>
                             <Route path='/' exact component={Home}/>
                             <Route path='/detail/:id' exact component={Detail}/>
                             <Route path='/login' exact component={Login}/>

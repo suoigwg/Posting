@@ -1,6 +1,6 @@
 import axios from 'axios';
 import * as constants from './constants'
-
+import {message} from "antd";
 
 const loginSuccessAction = (data) => {
     return {
@@ -22,10 +22,13 @@ export const toggleHeader = (visibility) => {
 export const authenticate = (username, password) => {
     return (dispatch) => {
         console.log(username, password);
-        axios.post('http://localhost:8000/login', {username, password}).then((resp) => {
+        axios.post(process.env.REACT_APP_API_ROOT + 'login', {
+            username,
+            password
+        }, {withCredentials: true}).then((resp) => {
             dispatch(loginSuccessAction(resp.data))
         }).catch(() => {
-            console.log('Wrong credentials')
+            message.error("登录信息错误")
         })
     }
 };

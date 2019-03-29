@@ -7,22 +7,7 @@ import * as actionCreators from './store/actionCreators'
 import axios from 'axios';
 
 
-const success = () => {
-    message.success('This is a message of success');
-};
-
-const error = () => {
-    message.error('This is a message of error');
-};
-
-const warning = () => {
-    message.warning('This is message of warning');
-};
-
 class Composer extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     state = {
         ModalText: '文章将被提交',
@@ -43,9 +28,9 @@ class Composer extends Component {
         });
 
         const {title, content, author} = this.props;
-        axios.post("http://localhost:8000/article/new", {
+        axios.post(process.env.REACT_APP_API_ROOT + "article/new", {
             title, content, author
-        }).then(() => {
+        }, {withCredentials: true}).then(() => {
             this.setState({
                 visible: false,
                 confirmLoading: false,
