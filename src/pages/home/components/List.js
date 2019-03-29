@@ -3,6 +3,9 @@ import {connect} from "react-redux";
 import {ListInfo, ListItem} from "../style"
 import {Link} from "react-router-dom";
 import htmlConverter from 'html-to-text';
+import {Typography} from "antd";
+
+const {Title, Text} = Typography;
 
 class List extends Component {
     render() {
@@ -15,8 +18,9 @@ class List extends Component {
                             <ListItem>
                                 <img alt='' className='pic' src={''}/>
                                 <ListInfo>
-                                    <p>{item.title}</p>
-                                    <p className='brief'>{htmlConverter.fromString(item.content).slice(0, 100)}</p>
+                                    <Title level={2}>{item.title}</Title>
+                                    <Text
+                                        className='brief'>{htmlConverter.fromString(item.content).slice(0, 100)}</Text>
                                 </ListInfo>
                             </ListItem>
                         </Link>

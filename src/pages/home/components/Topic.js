@@ -1,9 +1,7 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {
-    TopicItem,
-    TopicWrapper
-} from "../style";
+import {TopicItem, TopicWrapper} from "../style";
+
 
 class Topic extends Component {
 

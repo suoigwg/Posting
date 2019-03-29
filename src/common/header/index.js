@@ -2,32 +2,101 @@ import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {
     Addition,
-    Button,
     HeaderWrapper,
-    Logo,
+    MyButton,
     Nav,
     NavItem,
-    NavSearch,
     SearchInfo,
     SearchInfoItem,
     SearchInfoList,
     SearchInfoSwitch,
-    SearchInfoTitle,
-    SearchWrapper
+    SearchInfoTitle
 } from "./style";
-import {CSSTransition} from 'react-transition-group'
 import * as actionCreators from './store/actionCreaters'
 import {constants} from "./store";
-import * as loginActionCreators from '../../pages/login/store/actionCreators'
 import {Link} from "react-router-dom";
-import {Avatar, message} from "antd";
+import {AutoComplete, Avatar, Button, Icon, Input, message} from "antd";
+import Axios from "axios";
+import "./style.scss"
 
 message.config({
     duration: 1,
     maxCount: 2,
 });
 
+const Option = AutoComplete.Option;
+
+function onSelect(value) {
+    console.log('onSelect', value);
+}
+
+
+function renderOption(item) {
+    return (
+        <Option key={item.id}>
+            在文章
+            <Link
+                to={'/detail/' + item.id}
+            >
+                {item.title}
+            </Link>中出现过
+        </Option>
+    );
+}
+
 class Header extends Component{
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            dataSource: []
+        };
+        this.renderSearch = this.renderSearch.bind(this);
+    }
+
+    handleSearch = (value) => {
+        if (value === undefined || value.length === 0) return;
+        Axios.get(process.env.REACT_APP_API_ROOT + 'search/' + value).then(
+            (resp) => {
+                console.log(resp.data);
+                this.setState({
+                    dataSource: resp.data
+                });
+            }
+        ).catch(
+            () => message.error("搜索接口获取失败")
+        );
+        console.log(value);
+
+    };
+
+    renderSearch() {
+        const {dataSource} = this.state;
+        return (
+            <div className="global-search-wrapper" style={{width: 300, paddingTop: 10, display: "inline-block"}}>
+                <AutoComplete
+                    className="global-search"
+                    size="large"
+                    style={{width: '100%'}}
+                    dataSource={dataSource.map(renderOption)}
+                    onSelect={onSelect}
+                    onSearch={this.handleSearch}
+                    placeholder="搜索"
+                    optionLabelProp="text"
+                >
+                    <Input
+                        suffix={(
+                            <Button className="search-btn" size="large" type="primary"
+                            >
+                                <Icon type="search"/>
+                            </Button>
+                        )}
+
+                    />
+                </AutoComplete>
+            </div>
+        );
+    }
 
     showHotTopic(){
         const {focused, list, hotTopicMouseIn, hotTopicMouseOut, mouseIn, totalPage, currentPage, switchPage} = this.props
@@ -85,39 +154,21 @@ class Header extends Component{
         if (hideHeader) return '';
         return(
             <HeaderWrapper>
-                <Link to={'/'}><Logo/></Link>
                 <Nav>
                     <Link to='/'><NavItem className='left active'>首页</NavItem></Link>
-                    <NavItem className='left' onClick={this.notImplemented}>下载App</NavItem>
-                    <NavItem className='right' onClick={this.toggleLogin.bind(this)}>{this.userState()}</NavItem>
-                    <SearchWrapper>
-                        <CSSTransition
-                            in={focused}
-                            timeout={200}
-                            classNames="slide"
-                        >
-                            <NavSearch
-                                className={focused ? 'focused' : ''}
-                                onFocus={() => {
-                                    searchBarFocused(list)
-                                }}
-                                onBlur={searchBarBlur}
-                            />
-                        </CSSTransition>
-                        <i className={focused ? 'focused iconfont zoom' : 'iconfont zoom'}>&#xe6e4;</i>
-                        {this.showHotTopic(focused)}
-                    </SearchWrapper>
+                    <NavItem className='right'>{this.userState()}</NavItem>
+                    {this.renderSearch()}
                     <Addition>
                         {login
                             ? (
                                 <Link to={'/compose'}>
-                            <Button className='reg'><i className='iconfont'>&#xe615;</i>写文章</Button>
+                                    <MyButton className='reg'><i className='iconfont'>&#xe615;</i>写文章</MyButton>
                                 </Link>
                             )
                             : ''
                         }
                         {!login
-                            ? <Button className='writing' onClick={this.notImplemented}>注册</Button>
+                            ? <MyButton className='writing' onClick={this.notImplemented}>注册</MyButton>
                             : ''
                         }
                     </Addition>
@@ -126,12 +177,6 @@ class Header extends Component{
         )
     }
 
-    toggleLogin() {
-        if (this.props.login) {
-            this.props.logout();
-        } else {
-        }
-    }
 
 }
 
@@ -178,10 +223,6 @@ const mapDispatchToProps = (dispatch)=>{
                 dispatch(actionCreators.switchPageAction(currentPage + 1));
             }
         },
-
-        logout() {
-            dispatch(loginActionCreators.logout());
-        }
 
 
     }

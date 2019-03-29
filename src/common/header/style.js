@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import LogoPic from '../../statics/imgs/logo.png'
+
 export const HeaderWrapper = styled.div`
   position: relative;
   height: 58px;
@@ -75,7 +76,7 @@ export const Addition = styled.div`
 
 `;
 
-export const Button = styled.div`
+export const MyButton = styled.div`
   float: right;  
   line-height: 38px;
   border-radius: 19px;

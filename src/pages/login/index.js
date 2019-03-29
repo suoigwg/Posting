@@ -1,21 +1,10 @@
-import React, {Component, Fragment} from 'react';
-import {
-    Remember,
-    CenterDiv,
-    LoginForm,
-    Label,
-    LabelWrapper,
-    LogoWrapper,
-    Logo,
-    LoginWrapper,
-    LoginBox,
-    Input,
-    Button
-} from "./style";
+import React, {Component} from 'react';
+import {Button, CenterDiv, Input, Label, LabelWrapper, LoginBox, LoginForm, LoginWrapper, LogoWrapper} from "./style";
 import * as actionCreators from "./store/actionCreators";
 import {connect} from "react-redux";
 import {Redirect} from "react-router-dom";
 import logoImg from '../../statics/imgs/logo_big.png'
+
 class Login extends Component {
     constructor(props) {
         super(props);
@@ -45,6 +34,7 @@ class Login extends Component {
                             </LoginForm>
                             <Button type={'submit'} form={'loginForm'}>登录</Button>
                         </CenterDiv>
+                        <p>账号 demoAccount 密码 123456</p>
 
 
                     </LoginBox>

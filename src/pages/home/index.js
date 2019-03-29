@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {HomeWrapper, HomeLeft, HomeRight, Top, LoadMore} from "./style";
+import {HomeLeft, HomeRight, HomeWrapper, LoadMore, Top} from "./style";
 import Topic from './components/Topic';
 import Writer from './components/Writer';
 import List from './components/List';
@@ -7,6 +7,7 @@ import Recommend from './components/Recommend';
 import {connect} from "react-redux";
 import {getHomeJson} from "./store/actionCreators";
 import {actionCreators} from "./store/index";
+
 
 class Home extends Component {
     render() {

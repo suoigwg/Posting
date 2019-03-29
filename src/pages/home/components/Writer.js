@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {LoadMoreAuthor, WriterList, WriterListItem, WriterWrapper} from "../style";
 import {connect} from "react-redux";
-import {actionCreators} from "../store/actionCreators"
 import {Link} from "react-router-dom";
 import {Avatar} from "antd";
+
 
 class Writer extends Component {
     render() {
@@ -15,9 +15,10 @@ class Writer extends Component {
                             return (
                                 <WriterListItem key={item.id}>
                                     <Avatar size={64} icon={'user'}/>
-                                    <div style={{padding: '10px 0 0 15px'}}>
+                                    <div style={{marginLeft: '15px'}}>
                                         <Link to={'/user/' + item.id}>
-                                            <span className='name'>{item.username}</span>
+                                            <h4 className='name'
+                                                style={{lineHeight: '64px', fontSize: '22px'}}>{item.username}</h4>
                                         </Link>
                                     </div>
                                     <p></p>

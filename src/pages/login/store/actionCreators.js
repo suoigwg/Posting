@@ -1,6 +1,5 @@
 import axios from 'axios';
 import * as constants from './constants'
-import {fromJS} from "immutable";
 
 
 const loginSuccessAction = (data) => {
@@ -11,12 +10,6 @@ const loginSuccessAction = (data) => {
     }
 };
 
-
-export const logout = () => {
-    return (dispatch) => {
-        dispatch(loginSuccessAction(false));
-    }
-};
 
 export const toggleHeader = (visibility) => {
     return {

@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
-import {Content, DetailWrapper, Header, LikeBtn} from "./style";
+import {Content, DetailWrapper, LikeBtn} from "./style";
 import {actionCreators} from "./store/index";
 import {connect} from "react-redux";
-import {Button, message} from "antd";
+import {Button, message, Typography} from "antd";
 import Axios from "axios";
+
+const {Title, Text, Paragraph} = Typography;
 
 class Detail extends Component {
     constructor(props) {
@@ -17,8 +19,9 @@ class Detail extends Component {
         const timestamp = new Date(parseInt(this.props.timestamp, 10));
         return (
             <DetailWrapper>
-                <Header>{title}</Header>
-                <p>发表于{timestamp.getFullYear() + '-' + timestamp.getMonth() + '-' + timestamp.getDay()}</p>
+                <Title level={1}>{title}</Title>
+                <Text
+                    type="secondary">发表于{timestamp.getFullYear() + '-' + timestamp.getMonth() + '-' + timestamp.getDay()}</Text>
                 <Content dangerouslySetInnerHTML={{__html: content}}></Content>
                 <LikeBtn>
                     <Button shape="round" icon="like" size={'large'}
