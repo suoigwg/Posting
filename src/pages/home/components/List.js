@@ -15,7 +15,8 @@ class List extends Component {
                     return (
                         <Link key={item.id} to={'/detail/' + item.id}>
                             <ListItem>
-                                <img alt='' className='pic' src={''}/>
+                                <img alt='' className='pic'
+                                     src={'https://st3.depositphotos.com/1985863/12773/v/950/depositphotos_127734902-stock-illustration-blog-article-icon-illustration-design.jpg'}/>
                                 <ListInfo>
                                     <Title level={2}>{item.title}</Title>
                                     <Text
