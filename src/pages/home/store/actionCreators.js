@@ -35,7 +35,7 @@ export const changeTopBtnAction = (visibility) => {
 
 export const getHomeJson = () => {
     return (dispatch) => {
-        axios.get('http://localhost:8000/article/list').then((resp) => {
+        axios.get(process.env.REACT_APP_API_ROOT + 'article/list').then((resp) => {
             dispatch(initHomeDataAction(resp.data));
         }).catch(() => {
             console.log('获取主页文章失败');
@@ -45,7 +45,7 @@ export const getHomeJson = () => {
 
 export const loadMoreData = (page) => {
     return (dispatch) => {
-        axios.get(`http://localhost:8000/article/list/?page=${page}`).then((resp) => {
+        axios.get(process.env.REACT_APP_API_ROOT + 'article/list/?page=' + page).then((resp) => {
             dispatch(loadMoreDataAction(resp.data, page));
         }).catch(() => {
             console.log('api error');
@@ -56,7 +56,7 @@ export const loadMoreData = (page) => {
 
 export const loadAuthorData = () => {
     return (dispatch) => {
-        axios.get('http://localhost:8000/users').then((resp) => {
+        axios.get(process.env.REACT_APP_API_ROOT + 'users').then((resp) => {
             dispatch(loadAuthorAction(resp.data));
         }).catch(() => {
             console.log('获取推荐用户 api error');

@@ -41,7 +41,7 @@ export const loadUserProfile = (userid) => {
 
 export const loadUserActivity = (userid) => {
     return (dispatch) => {
-        axios.get('http://localhost:8000/likes/' + userid).then((resp) => {
+        axios.get(process.env.REACT_APP_API_ROOT + 'likes/' + userid).then((resp) => {
             dispatch(loadActivityAction(resp.data));
         }).catch(() => console.log("无法加载用户活动列表"));
     }
@@ -49,7 +49,7 @@ export const loadUserActivity = (userid) => {
 
 export const loadPublishActivity = (userid) => {
     return (dispatch) => {
-        axios.get('http://localhost:8000/publish/' + userid).then((resp) => {
+        axios.get(process.env.REACT_APP_API_ROOT + 'publish/' + userid).then((resp) => {
             dispatch(loadActivityAction(resp.data));
         }).catch(() => console.log("无法加载用户活动列表"));
     }
