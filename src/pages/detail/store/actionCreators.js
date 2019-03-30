@@ -3,13 +3,14 @@ import * as constants from './constants'
 
 
 const loadArticleAction = (data) => {
-    const {title, content, timestamp, date} = data;
+    const {title, content, timestamp, date, author} = data;
     return {
         type: constants.LOAD_ARTICLE_DATA,
         title,
         content,
         timestamp,
-        date
+        date,
+        author
     }
 };
 
